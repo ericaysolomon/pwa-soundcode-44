@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-Item \"c:\\\\Users\\\\DELL\\\\ebook_interactive.html\")",
+      "Bash(Select-Object FullName, Length)"
+    ]
+  }
+}
