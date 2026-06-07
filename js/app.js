@@ -457,10 +457,35 @@ let searchQuery = '';
 let gameCategory = 'all';
 let deferredInstallPrompt = null;
 
-// ── Premium / access control ──────────────────────────────────────────────────
+// ── Premium / licence key control ─────────────────────────────────────────────
 const FREE_SECTIONS = new Set(['welcome','howto','foundations','ms']);
-const ACCESS_CODE   = 'SC44PRO';
-let isPremium = localStorage.getItem('sc44_premium') === '1';
+let isPremium = false;
+
+// Restore premium state from localStorage and silently re-validate with server
+(function initPremium() {
+  const key        = localStorage.getItem('sc44_license_key');
+  const instanceId = localStorage.getItem('sc44_instance_id');
+  if (!key || !instanceId) return;
+  isPremium = true; // optimistic — server check below may revoke this
+  fetch('/api/validate-license', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ licenseKey: key, instanceId, action: 'validate' }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (!data.valid) {
+        isPremium = false;
+        localStorage.removeItem('sc44_license_key');
+        localStorage.removeItem('sc44_instance_id');
+        buildSidebar();
+        updateSidebar();
+        renderContent();
+        showToast('Your licence is no longer active. Please re-enter your key.');
+      }
+    })
+    .catch(() => {}); // offline — keep optimistic premium state
+})();
 
 function isLocked(id) {
   return !isPremium && !FREE_SECTIONS.has(id);
@@ -487,20 +512,49 @@ function toggleCodeArea() {
   }
 }
 
-function submitAccessCode() {
-  const val = document.getElementById('prem-code-input').value.trim().toUpperCase();
+async function submitAccessCode() {
+  const key = document.getElementById('prem-code-input').value.trim();
   const msg = document.getElementById('prem-code-msg');
-  if (val === ACCESS_CODE) {
-    isPremium = true;
-    localStorage.setItem('sc44_premium', '1');
-    closePremiumOverlay();
-    buildSidebar();
-    updateSidebar();
-    renderContent();
-    showToast('✓ Full access unlocked! Enjoy all 44 phonemes.');
-  } else {
-    msg.textContent = 'Incorrect code — please try again.';
+  const btn = document.getElementById('prem-code-btn');
+
+  if (!key) {
+    msg.textContent = 'Please enter your licence key.';
     msg.style.color = '#e53935';
+    return;
+  }
+
+  msg.textContent = 'Validating licence key…';
+  msg.style.color = '';
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+
+  try {
+    const res  = await fetch('/api/validate-license', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ licenseKey: key, action: 'activate' }),
+    });
+    const data = await res.json();
+
+    if (data.valid) {
+      isPremium = true;
+      localStorage.setItem('sc44_license_key',  key);
+      localStorage.setItem('sc44_instance_id',  data.instanceId);
+      closePremiumOverlay();
+      buildSidebar();
+      updateSidebar();
+      renderContent();
+      showToast('✓ Full access unlocked! Enjoy all 44 phonemes.');
+    } else {
+      msg.textContent = data.error || 'Invalid licence key — please try again.';
+      msg.style.color = '#e53935';
+    }
+  } catch {
+    msg.textContent = 'Connection error — please check your internet and try again.';
+    msg.style.color = '#e53935';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Unlock Access';
   }
 }
 

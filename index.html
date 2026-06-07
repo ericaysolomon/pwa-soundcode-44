@@ -55,14 +55,13 @@
     <div class="prem-title">Premium Content</div>
     <div class="prem-desc">This section is part of SoundCode 44 Full Access — the complete British English sound system with all 44 phonemes, interactive IPA chart, 5 practice games, and more.</div>
     <a href="#" class="prem-cta">Get Full Access →</a>
-    <div class="prem-code-link" onclick="toggleCodeArea()">Already purchased? Click here to enter your access code.</div>
+    <div class="prem-code-link" onclick="toggleCodeArea()">Already purchased? Enter your licence key below.</div>
     <div class="prem-code-area" id="prem-code-area">
       <input type="text" id="prem-code-input" class="prem-code-input"
-             placeholder="ACCESS CODE" maxlength="20"
+             placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" maxlength="50"
              autocomplete="off" spellcheck="false"
-             oninput="this.value=this.value.toUpperCase()"
              onkeydown="if(event.key==='Enter')submitAccessCode()">
-      <button class="btn-primary" style="width:100%;margin-top:4px" onclick="submitAccessCode()">Unlock Access</button>
+      <button id="prem-code-btn" class="btn-primary" style="width:100%;margin-top:4px" onclick="submitAccessCode()">Unlock Access</button>
       <div id="prem-code-msg" style="font-size:12px;margin-top:8px;text-align:center;min-height:16px"></div>
     </div>
   </div>
