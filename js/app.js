@@ -679,11 +679,106 @@ function speakKeywords(w1, w2, w3) {
 }
 
 function speakSent(s) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(s);
-  u.rate = 0.8; u.lang = 'en-GB';
-  window.speechSynthesis.speak(u);
+  const SENT_MAP = {
+    "The black cat sat on the flat map.": "sent_vowel_short_a_1",
+    "Can you hand me that tan bag?": "sent_vowel_short_a_2",
+    "The red hen sat on the edge of the bed.": "sent_vowel_short_e_1",
+    "When did he get the letter from the head?": "sent_vowel_short_e_2",
+    "The fish in the big river swim quickly.": "sent_vowel_short_i_1",
+    "Is this the gift in the pink tin?": "sent_vowel_short_i_2",
+    "The hot dog fell off the top of the box.": "sent_vowel_short_o_1",
+    "Pop the odd sock into the shop pot.": "sent_vowel_short_o_2",
+    "The young duck dug up the mud under the bush.": "sent_vowel_short_u_1",
+    "Run and touch the rough trunk.": "sent_vowel_short_u_2",
+    "She took a good look at the full book.": "sent_vowel_short_oo_1",
+    "Put the wool cushion on the wooden hook.": "sent_vowel_short_oo_2",
+    "The teacher opened the lesson about the famous painter.": "sent_vowel_schwa_1",
+    "A person\'s banana fell into the garden.": "sent_vowel_schwa_2",
+    "She can see the green tree by the sea.": "sent_vowel_long_ee_1",
+    "We need to keep the streets clean.": "sent_vowel_long_ee_2",
+    "The car park is far from the farm.": "sent_vowel_long_ar_1",
+    "Ask your father to cast the glass.": "sent_vowel_long_ar_2",
+    "She thought a walk by the shore would restore her.": "sent_vowel_long_aw_1",
+    "The ball caught the wall and fell to the floor.": "sent_vowel_long_aw_2",
+    "The moon shone on the cool blue pool.": "sent_vowel_long_oo_1",
+    "Use a spoon to remove the fruit juice.": "sent_vowel_long_oo_2",
+    "The bird perched on the first fern by the church.": "sent_vowel_long_er_1",
+    "Her words hurt more than the burn.": "sent_vowel_long_er_2",
+    "They say the train may arrive late on that grey day.": "sent_vowel_diph_ay_1",
+    "Take the cake and place it on the great table.": "sent_vowel_diph_ay_2",
+    "Try to find the bright light on the right side.": "sent_vowel_diph_eye_1",
+    "The child might fly the bright kite high tonight.": "sent_vowel_diph_eye_2",
+    "Go home along the road below the old stone wall.": "sent_vowel_diph_oh_1",
+    "Show the boat how to row toward the coast.": "sent_vowel_diph_oh_2",
+    "The cloud came down around the whole town.": "sent_vowel_diph_ow_1",
+    "A loud shout from the crowd in the south.": "sent_vowel_diph_ow_2",
+    "The boy joined the royal voyage to avoid the noise.": "sent_vowel_diph_oy_1",
+    "The soil in the foil was moist with oil.": "sent_vowel_diph_oy_2",
+    "Where is the rare chair with the fair repair?": "sent_vowel_diph_air_1",
+    "I fear that the deer is near the pier here.": "sent_vowel_diph_ear_1",
+    "A cheerful engineer appeared.": "sent_vowel_diph_ear_2",
+    "The tour to the pure moor was a sure cure.": "sent_vowel_diph_oor_1",
+    "I am sure your tour will endure.": "sent_vowel_diph_oor_2",
+    "Pick up the purple pen from the top of the page.": "sent_cons_p_1",
+    "The puppy put its paw on the purple cap.": "sent_cons_p_2",
+    "Bob bought a big blue bag of bread.": "sent_cons_b_1",
+    "The rabbit bit the rubber ball by the bed.": "sent_cons_b_2",
+    "Take the hot pot from the table at the top.": "sent_cons_t_1",
+    "The cat sat on the mat and ate the lot.": "sent_cons_t_2",
+    "The dog dug a deep ditch in the dark garden.": "sent_cons_d_1",
+    "Did the red bird land on the old dead wood?": "sent_cons_d_2",
+    "Take the black clock and put the key on the back of the box.": "sent_cons_k_1",
+    "Could a cat catch a quick duck?": "sent_cons_k_2",
+    "The big dog got through the green gate in the fog.": "sent_cons_g_1",
+    "Grab the big log and get going.": "sent_cons_g_2",
+    "Fifty fluffy foxes fled from the forest to find food.": "sent_cons_f_1",
+    "The van drove over the vast valley to the village.": "sent_cons_v_1",
+    "Five brave divers move above the vivid cave.": "sent_cons_v_2",
+    "The thin thread stretched through the thick cloth.": "sent_cons_th_soft_2",
+    "They would rather bathe in the smooth weather together.": "sent_cons_th_hard_1",
+    "The mother breathes through those other paths.": "sent_cons_th_hard_2",
+    "The six swans sat still on the soft surface of the sea.": "sent_cons_s_1",
+    "Susan sells the finest sea salt.": "sent_cons_s_2",
+    "The bees in the busy zone buzzed near the frozen roses.": "sent_cons_z_1",
+    "She shushed the children by the fish and chip shop.": "sent_cons_sh_1",
+    "The flashy fashion show featured fresh shrubbery.": "sent_cons_sh_2",
+    "The television showed a vision of beige leisure.": "sent_cons_zh_1",
+    "It is a pleasure to measure the treasure.": "sent_cons_zh_2",
+    "He held his hat over his head in the heavy heat.": "sent_cons_h_1",
+    "The happy hamster hid behind the huge hedge.": "sent_cons_h_2",
+    "Choose the right chair and watch the champion teach the children.": "sent_cons_ch_1",
+    "The rich butcher watched the sketch catch fire.": "sent_cons_ch_2",
+    "The judge in the large cage urged John to jump the bridge.": "sent_cons_j_1",
+    "The giant giraffe juggled jars of jam.": "sent_cons_j_2",
+    "The mum made some warm meatballs for the summer meal.": "sent_cons_m_1",
+    "The lamb climbed through the morning mist.": "sent_cons_m_2",
+    "Now and then, in the morning sun, ten thin lines narrow into one.": "sent_cons_n_1",
+    "The knight knocked and kneeled.": "sent_cons_n_2",
+    "The king sang a long song, ringing a gong.": "sent_cons_ng_1",
+    "The young gang clung to the strong climbing ring.": "sent_cons_ng_2",
+    "The tall lad lay along the long wall like a log.": "sent_cons_l_1",
+    "Tell the little girl to pull the ball slowly.": "sent_cons_l_2",
+    "The red rabbit ran rapidly across the rocky river.": "sent_cons_r_1",
+    "Rain rarely rushes around the rural roads.": "sent_cons_r_2",
+    "We will wait by the wide waterway and watch the waves.": "sent_cons_w_1",
+    "Quick! Where is the white whale?": "sent_cons_w_2",
+    "Yes, you can use your yellow yarn in the yard.": "sent_cons_y_1",
+    "A few years ago, the youngsters ruled.": "sent_cons_y_2"
+  };
+  const fileId = SENT_MAP[s];
+  if (fileId) {
+    if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+    const audio = new Audio("audio/" + fileId + ".mp3");
+    currentAudio = audio;
+    audio.play().catch(() => showToast("Audio not available"));
+  } else {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(s);
+      u.rate = 0.8; u.lang = "en-GB";
+      window.speechSynthesis.speak(u);
+    }
+  }
 }
 
 function speakMinimalPair(words) {
@@ -699,7 +794,19 @@ function speakMinimalPair(words) {
 }
 
 function playWord(word) {
-  speakWord(word);
+  const path = "audio/word_" + word.toLowerCase().replace(/[^a-z]/g, "") + ".mp3";
+  if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+  const audio = new Audio(path);
+  currentAudio = audio;
+  audio.play().catch(() => {
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(word);
+      u.rate = 0.75; u.lang = "en-GB";
+      window.speechSynthesis.speak(u);
+    }
+  });
+  showToast(word);
 }
 
 // ── IPA cell (for chart) ──────────────────────────────────────────────────────
@@ -1524,3 +1631,5 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(() => {});
   }
 });
+
+
