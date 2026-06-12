@@ -663,21 +663,21 @@ function speakWord(w) {
 }
 
 function speakKeywords(w1, w2, w3) {
-  if (!window.speechSynthesis) { alert('Speech synthesis not supported. Use Chrome or Edge.'); return; }
-  window.speechSynthesis.cancel();
-  const mk = (text, rate) => {
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = rate; u.lang = 'en-GB';
-    return u;
-  };
-  window.speechSynthesis.speak(mk('Listen carefully to the sample words.', 0.85));
-  window.speechSynthesis.speak(mk(w1, 0.75));
-  window.speechSynthesis.speak(mk(w2, 0.75));
-  window.speechSynthesis.speak(mk(w3, 0.75));
-  window.speechSynthesis.speak(mk('Now you try.', 0.85));
-  showToast(w1 + ' · ' + w2 + ' · ' + w3);
+  const words = [w1, w2, w3];
+  let i = 0;
+  function playNext() {
+    if (i >= words.length) return;
+    const w = words[i++];
+    const path = 'audio/word_' + w.toLowerCase().replace(/[^a-z]/g, '') + '.mp3';
+    if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+    const audio = new Audio(path);
+    currentAudio = audio;
+    audio.onended = playNext;
+    audio.play().catch(() => playNext());
+  }
+  playNext();
+  showToast(w1 + ' - ' + w2 + ' - ' + w3);
 }
-
 function speakSent(s) {
   const SENT_MAP = {
     "The black cat sat on the flat map.": "sent_vowel_short_a_1",
