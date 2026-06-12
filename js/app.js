@@ -663,19 +663,31 @@ function speakWord(w) {
 }
 
 function speakKeywords(w1, w2, w3) {
-  const words = [w1, w2, w3];
-  let i = 0;
-  function playNext() {
-    if (i >= words.length) return;
-    const w = words[i++];
-    const path = 'audio/word_' + w.toLowerCase().replace(/[^a-z]/g, '') + '.mp3';
+  function speakTTS(text, onend) {
+    if (!window.speechSynthesis) { if (onend) onend(); return; }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.85; u.lang = "en-GB";
+    u.onend = onend || null;
+    window.speechSynthesis.speak(u);
+  }
+  function playMP3(word, onend) {
+    const path = "audio/word_" + word.toLowerCase().replace(/[^a-z]/g, "") + ".mp3";
     if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
     const audio = new Audio(path);
     currentAudio = audio;
-    audio.onended = playNext;
-    audio.play().catch(() => playNext());
+    audio.onended = onend || null;
+    audio.play().catch(() => { if (onend) onend(); });
   }
-  playNext();
+  speakTTS("Listen carefully to the sample words.", () => {
+    playMP3(w1, () => {
+      playMP3(w2, () => {
+        playMP3(w3, () => {
+          speakTTS("Now you try.", null);
+        });
+      });
+    });
+  });
   showToast(w1 + ' - ' + w2 + ' - ' + w3);
 }
 function speakSent(s) {
@@ -853,7 +865,7 @@ function buildCard(ph) {
       <div class="ph-sub">${ph.sub}</div>
       <div class="ph-kws">${kw1} · ${kw2} · ${kw3}</div>
     </div>
-    <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Hear the Sound</button>
+    <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Sample Words</button>
   </div>
   <div class="ph-how">
     <div class="ph-how-label">🖐 How to Make This Sound</div>
