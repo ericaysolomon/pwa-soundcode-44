@@ -10,10 +10,15 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ valid: false, error: 'Licence key is required' });
   }
 
-  const trimmedKey = licenseKey.trim();
-  const incrementUses = action === 'activate';
+  const trimmedKey = licenseKey.trim().toUpperCase();
 
-  // Both product permalinks - monthly/annual and lifetime
+  // Master keys - always valid
+  const MASTER_KEYS = ['SC44PRO', 'THRIVEDEV2024'];
+  if (MASTER_KEYS.includes(trimmedKey)) {
+    return res.status(200).json({ valid: true });
+  }
+
+  const incrementUses = action === 'activate';
   const productIds = ['ynxtkb', 'ilcnt'];
 
   try {
@@ -23,13 +28,11 @@ module.exports = async function handler(req, res) {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
           product_id: productId,
-          license_key: trimmedKey,
+          license_key: licenseKey.trim(),
           increment_uses_count: incrementUses ? 'true' : 'false',
         }),
       });
-
       const data = await gumroadRes.json();
-
       if (data.success) {
         const purchase = data.purchase;
         if (purchase.refunded || purchase.chargebacked || purchase.disputed) {
@@ -38,10 +41,7 @@ module.exports = async function handler(req, res) {
         return res.status(200).json({ valid: true });
       }
     }
-
-    // No match on either product
     return res.status(200).json({ valid: false, error: 'Invalid licence key - please check and try again.' });
-
   } catch (err) {
     console.error('Gumroad API error:', err);
     return res.status(500).json({ valid: false, error: 'Validation service temporarily unavailable - please try again.' });
