@@ -1570,7 +1570,24 @@ function renderContent() {
 
 // ── Sidebar toggle ────────────────────────────────────────────────────────────
 function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('collapsed');
+  const sidebar = document.getElementById('sidebar');
+  const isMobile = window.innerWidth <= 640;
+  if (isMobile) {
+    sidebar.classList.toggle('open');
+    let overlay = document.getElementById('sidebar-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'sidebar-overlay';
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+      });
+    }
+    overlay.classList.toggle('show', sidebar.classList.contains('open'));
+  } else {
+    sidebar.classList.toggle('collapsed');
+  }
 }
 
 // ── Build sidebar ─────────────────────────────────────────────────────────────
