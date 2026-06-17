@@ -4,15 +4,15 @@
 const PHONEMES = [
   // SHORT VOWELS
   { id:'vowel_short_a',  num:1,  ipa:'æ',  name:'Short A',      sub:'Short Vowel',   cat:'ms', file:'vowel_short_a',
-    keywords:'cat bat hat mat sat',
+    keywords:'cat plait bat',
     how:'Open mouth wide, tongue low and forward. Lips spread slightly. The lowest front vowel.',
-    patterns:[{sp:'a',words:['cat','bat','hat','map']},{sp:'ai',words:['plait']}],
+    patterns:[{sp:'a',words:['cat','bat','hat','map']},{sp:'ai',words:['plait','plaid']}],
     sents:['The black cat sat on the flat map.','Can you hand me that tan bag?'],
     tip:'Exaggerate the jaw drop. Think of a sheep going "baa" — same open, flat sound.',
     mistake:'In RP, TRAP and BATH vowels differ: "cat" /æ/ but "path" /ɑː/. Don\'t mix them.' },
 
   { id:'vowel_short_e',  num:2,  ipa:'e',  name:'Short E',      sub:'Short Vowel',   cat:'ms', file:'vowel_short_e',
-    keywords:'bed red ten men yes',
+    keywords:'bed head said',
     how:'Open your mouth halfway. Tongue mid-level — not high, not low. Lips slightly spread. Keep it short and crisp.',
     patterns:[{sp:'e',words:['bed','red','ten','pet']},{sp:'ea',words:['head','dead','bread','thread']},{sp:'ai',words:['said','again']},{sp:'a',words:['many','any']},{sp:'ie',words:['friend']}],
     sents:['The red hen sat on the edge of the bed.','When did he get the letter from the head?'],
@@ -20,15 +20,15 @@ const PHONEMES = [
     mistake:'Keep it short — "bed" has /e/ not the long vowel /eɪ/.' },
 
   { id:'vowel_short_i',  num:3,  ipa:'ɪ',  name:'Short I',      sub:'Short Vowel',   cat:'ms', file:'vowel_short_i',
-    keywords:'sit bit tip pin him',
+    keywords:'sit gym build',
     how:'Similar to /iː/ but more relaxed. The tongue is high but not as high. Lips slightly spread but not tense. Shorter and laxer.',
-    patterns:[{sp:'i',words:['sit','bit','tip','pin']},{sp:'y',words:['gym','myth','busy']},{sp:'ui',words:['build','guilt']},{sp:'o',words:['women']}],
+    patterns:[{sp:'i',words:['sit','bit','tip','pin']},{sp:'y',words:['gym','myth','busy']},{sp:'ui',words:['build','guilt']},{sp:'o',words:['women']},{sp:'e',words:['women','pretty','because','English']}],
     sents:['The fish in the big river swim quickly.','Is this the gift in the pink tin?'],
     tip:'Relax your tongue and lips — /ɪ/ is the lazy version of /iː/. Short and lax.',
     mistake:'Don\'t mix up "ship" /ʃɪp/ and "sheep" /ʃiːp/. Short /ɪ/ vs long /iː/.' },
 
   { id:'vowel_short_o',  num:4,  ipa:'ɒ',  name:'Short O',      sub:'Short Vowel',   cat:'ms', file:'vowel_short_o',
-    keywords:'hot dog lot pod fox',
+    keywords:'hot want dog',
     how:'Open your mouth wide. Tongue low and back. Lips slightly rounded but not as much as /ɔː/. A low, back, rounded vowel.',
     patterns:[{sp:'o',words:['hot','dog','lot','fox']},{sp:'a',words:['want','wash','what','was']}],
     sents:['The hot dog fell off the top of the box.','Pop the odd sock into the shop pot.'],
@@ -36,7 +36,7 @@ const PHONEMES = [
     mistake:'In RP, the "o" in "hot" is /ɒ/ NOT /ɑː/. The lips are slightly rounded.' },
 
   { id:'vowel_short_u',  num:5,  ipa:'ʌ',  name:'Short U',      sub:'Short Vowel',   cat:'ms', file:'vowel_short_u',
-    keywords:'cup bus run mud fun',
+    keywords:'cup son blood',
     how:'Open your mouth slightly. Tongue central and low-mid. Lips neutral — not spread, not rounded. Very open and relaxed.',
     patterns:[{sp:'u',words:['cup','bus','run','mud']},{sp:'o',words:['son','come','love','above']},{sp:'oo',words:['blood','flood']},{sp:'ou',words:['young','touch']}],
     sents:['The young duck dug up the mud under the bush.','Run and touch the rough trunk.'],
@@ -44,32 +44,32 @@ const PHONEMES = [
     mistake:'Don\'t confuse "cut" /kʌt/ with "caught" /kɔːt/ or "cot" /kɒt/. Three different vowels.' },
 
   { id:'vowel_short_oo', num:6,  ipa:'ʊ',  name:'Short OO',     sub:'Short Vowel',   cat:'ms', file:'vowel_short_oo',
-    keywords:'book look foot good pull',
+    keywords:'book put should',
     how:'Lightly round your lips — less rounded than /uː/. Tongue high-back but relaxed. The short, lax version of /uː/.',
-    patterns:[{sp:'oo',words:['book','look','foot','good']},{sp:'u',words:['put','push','pull','full']},{sp:'ou',words:['should','could']},{sp:'o',words:['wolf','woman']}],
+    patterns:[{sp:'oo',words:['book','look','foot','good']},{sp:'u',words:['put','push','pull','full']},{sp:'oul',words:['should','could']},{sp:'o',words:['wolf','woman']}],
     sents:['She took a good look at the full book.','Put the wool cushion on the wooden hook.'],
     tip:'Like /uː/ but cut it short and relax the lips. "Look" is much shorter than "Luke".',
     mistake:'Don\'t make "book" rhyme with "Luke". /ʊ/ is short and lax; /uː/ is long and tense.' },
 
   { id:'vowel_schwa',    num:7,  ipa:'ə',  name:'Schwa',         sub:'Unstressed Vowel',cat:'ms', file:'vowel_schwa',
-    keywords:'about the sofa banana comma',
+    keywords:'about open bacon',
     how:'The most RELAXED sound in English. Your mouth is slightly open, tongue is central. Only appears in UNSTRESSED syllables.',
-    patterns:[{sp:'a',words:['about','ago','banana','afraid']},{sp:'e',words:['open','happen','broken','listen']},{sp:'o',words:['bacon','lesson','button','person']},{sp:'i',words:['pencil','animal']},{sp:'u',words:['supply','circus']},{sp:'ou',words:['famous','colour']}],
+    patterns:[{sp:'a',words:['about','ago','banana','afraid']},{sp:'e',words:['open','happen','broken','listen']},{sp:'o',words:['bacon','melon','onion','lemon']},{sp:'i',words:['pencil','fossil']},{sp:'u',words:['supply','circus']},{sp:'ou',words:['famous','colour']},{sp:'er',words:['teacher','sister']},{sp:'re',words:['theatre','centre']},{sp:'ar',words:['collar','scholar']},{sp:'or',words:['doctor','victor']},{sp:'al',words:['vocal','local']},{sp:'el',words:['cancel','parcel']},{sp:'ure',words:['figure','stature']}],
     sents:['The teacher opened the lesson about the famous painter.','A person\'s banana fell into the garden.'],
     tip:'Schwa is the MOST COMMON sound in English. Every unstressed syllable can become /ə/.',
     mistake:'"banana" is not /bæ.næ.næ/. It should be /bə.nɑː.nə/. Unstressed = schwa.' },
 
   // LONG VOWELS
   { id:'vowel_long_ee',  num:8,  ipa:'iː', name:'Long EE',      sub:'Long Vowel',    cat:'ml', file:'vowel_long_ee',
-    keywords:'see tree feet meet green',
+    keywords:'see meat field',
     how:'Spread your lips wide as if smiling. Raise the front of your tongue high toward the roof of your mouth. Hold the position — no glide.',
-    patterns:[{sp:'ee',words:['see','tree','feet','bee']},{sp:'ea',words:['meat','read','beach','dream']},{sp:'e',words:['he','she','me','we']},{sp:'e-e',words:['these','theme','here','scene']},{sp:'ie',words:['field','piece']},{sp:'ey',words:['key','money']},{sp:'y',words:['funny','baby']}],
+    patterns:[{sp:'ee',words:['see','tree','feet','bee']},{sp:'ea',words:['meat','read','beach','dream']},{sp:'e',words:['he','she','me','we']},{sp:'e-e',words:['these','scene','eve','complete']},{sp:'ie',words:['field','piece']},{sp:'ey',words:['key','money']},{sp:'y',words:['funny','baby']},{sp:'i',words:['sardine','marine','machine','vaccine']}],
     sents:['She can see the green tree by the sea.','We need to keep the streets clean.'],
     tip:'Think of the sound when you say "Cheese!" for a photo. Lips spread wide.',
     mistake:'Don\'t add a glide at the end. Keep it pure and steady — not "ee-yuh".' },
 
   { id:'vowel_long_ar',  num:9,  ipa:'ɑː', name:'Long AR',      sub:'Long Vowel',    cat:'ml', file:'vowel_long_ar',
-    keywords:'car far star park dark',
+    keywords:'car bath half',
     how:'Open your mouth wide — as if a doctor is checking your throat. Drop your jaw. Tongue lies flat and low at the back.',
     patterns:[{sp:'ar',words:['car','far','star','park']},{sp:'a',words:['bath','path','grass','fast']},{sp:'al',words:['half','calf']},{sp:'ear',words:['heart','hearth']}],
     sents:['The car park is far from the farm.','Ask your father to cast the glass.'],
@@ -77,7 +77,7 @@ const PHONEMES = [
     mistake:'In British RP, "bath" words use /ɑː/ not /æ/. "path" = /pɑːθ/, not /pæθ/.' },
 
   { id:'vowel_long_aw',  num:10, ipa:'ɔː', name:'Long AW',      sub:'Long Vowel',    cat:'ml', file:'vowel_long_aw',
-    keywords:'saw law call born more',
+    keywords:'saw born caught',
     how:'Round your lips into a small oval shape. Raise the back of your tongue toward your soft palate. Hold it steady.',
     patterns:[{sp:'aw',words:['saw','law','draw','lawn']},{sp:'or',words:['born','more','for','floor']},{sp:'al',words:['call','walk','talk','ball']},{sp:'au',words:['caught','fault']},{sp:'oor',words:['floor','door']},{sp:'oar',words:['board','soar']},{sp:'ough',words:['thought','bought']}],
     sents:['She thought a walk by the shore would restore her.','The ball caught the wall and fell to the floor.'],
@@ -85,7 +85,7 @@ const PHONEMES = [
     mistake:'Don\'t confuse with /ɒ/ (short o). /ɔː/ is LONGER and more rounded.' },
 
   { id:'vowel_long_oo',  num:11, ipa:'uː', name:'Long OO',      sub:'Long Vowel',    cat:'ml', file:'vowel_long_oo',
-    keywords:'moon food blue true you',
+    keywords:'moon blue fruit',
     how:'Round your lips tightly into a small circle — like blowing out a candle. Push your lips forward. Raise the back of your tongue high.',
     patterns:[{sp:'oo',words:['moon','food','boot','cool']},{sp:'ue',words:['blue','clue','glue','true']},{sp:'ew',words:['new','few','dew','flew']},{sp:'u-e',words:['rule','tune','cube','rude']},{sp:'ui',words:['fruit','suit']},{sp:'ou',words:['soup','through']},{sp:'o',words:['who','move']}],
     sents:['The moon shone on the cool blue pool.','Use a spoon to remove the fruit juice.'],
@@ -93,16 +93,16 @@ const PHONEMES = [
     mistake:'Keep lips tightly rounded. Don\'t relax into /ʊ/ — "food" ≠ "foot".' },
 
   { id:'vowel_long_er',  num:12, ipa:'ɜː', name:'Long ER',      sub:'Long Vowel',    cat:'ml', file:'vowel_long_er',
-    keywords:'bird her word turn girl',
+    keywords:'her bird turn',
     how:'Relax your lips — don\'t round them. Place your tongue in the middle of your mouth, neither high nor low. Hold it steady.',
-    patterns:[{sp:'er',words:['her','fern','verb','herd']},{sp:'ir',words:['bird','girl','sir','first']},{sp:'ur',words:['turn','burn','fur','hurt']},{sp:'ear',words:['learn','earth']},{sp:'or',words:['word','work']},{sp:'our',words:['journey','courage']}],
+    patterns:[{sp:'er',words:['her','fern','verb','herd']},{sp:'ir',words:['bird','girl','sir','first']},{sp:'ur',words:['turn','burn','fur','hurt']},{sp:'ear',words:['learn','earth']},{sp:'or',words:['word','work']},{sp:'our',words:['journal','courtesy','scourge','adjourn']}],
     sents:['The bird perched on the first fern by the church.','Her words hurt more than the burn.'],
     tip:'Imagine you\'re unsure and say "errr...". That\'s it! No lip rounding.',
     mistake:'British /ɜː/ has NO R colouring. Don\'t pull your tongue back like American English.' },
 
   // DIPHTHONGS
   { id:'vowel_diph_ay',  num:13, ipa:'eɪ', name:'Long A / AY',  sub:'Diphthong',     cat:'di', file:'vowel_diph_ay',
-    keywords:'day play say rain eight',
+    keywords:'day rain cake',
     how:'Start with /e/ (mid-front position), then GLIDE UP toward /ɪ/. Your tongue rises and lips slightly spread more.',
     patterns:[{sp:'ay',words:['day','play','say','stay']},{sp:'ai',words:['rain','wait','train','sail']},{sp:'a-e',words:['cake','name','late','game']},{sp:'a',words:['table','baby']},{sp:'ea',words:['great','break']},{sp:'ey',words:['they','grey']},{sp:'eigh',words:['eight','weight']}],
     sents:['They say the train may arrive late on that grey day.','Take the cake and place it on the great table.'],
@@ -110,7 +110,7 @@ const PHONEMES = [
     mistake:'Don\'t cut it short. The glide is essential — "day" must end with a slight /ɪ/ quality.' },
 
   { id:'vowel_diph_eye', num:14, ipa:'aɪ', name:'Long I / EYE',  sub:'Diphthong',     cat:'di', file:'vowel_diph_eye',
-    keywords:'my sky high five time',
+    keywords:'time night fly',
     how:'Start with an open /a/ position (low, central tongue, wide jaw), then GLIDE UP to /ɪ/. The jaw closes and tongue rises.',
     patterns:[{sp:'i-e',words:['time','like','bike','fine']},{sp:'igh',words:['high','night','light','right']},{sp:'y',words:['my','sky','fly','try']},{sp:'i',words:['find','kind']},{sp:'ie',words:['pie','die']},{sp:'ye',words:['bye','rye']},{sp:'ei',words:['height','either']}],
     sents:['Try to find the bright light on the right side.','The child might fly the bright kite high tonight.'],
@@ -118,7 +118,7 @@ const PHONEMES = [
     mistake:'Don\'t flatten it to /aː/. The /ɪ/ glide at the end is essential.' },
 
   { id:'vowel_diph_oh',  num:15, ipa:'əʊ', name:'Long O / OH',  sub:'Diphthong',     cat:'di', file:'vowel_diph_oh',
-    keywords:'go home note boat low',
+    keywords:'home boat know',
     how:'Start with /ə/ (central, relaxed), then GLIDE toward /ʊ/ (rounded). Your lips round and tongue moves back.',
     patterns:[{sp:'o-e',words:['home','bone','stone','note']},{sp:'oa',words:['boat','road','coat','load']},{sp:'ow',words:['low','slow','grow','know']},{sp:'o',words:['go','so']},{sp:'oe',words:['toe','foe']},{sp:'ou',words:['soul','though']}],
     sents:['Go home along the road below the old stone wall.','Show the boat how to row toward the coast.'],
@@ -126,7 +126,7 @@ const PHONEMES = [
     mistake:'American "go" starts more back; British /əʊ/ starts central. Keep the schwa start.' },
 
   { id:'vowel_diph_ow',  num:16, ipa:'aʊ', name:'OW / OW',      sub:'Diphthong',     cat:'di', file:'vowel_diph_ow',
-    keywords:'now cow house out loud',
+    keywords:'now house plough',
     how:'Start with an open /a/ (wide jaw, low tongue), then GLIDE toward /ʊ/ (rounded). Lips round and jaw closes as you move.',
     patterns:[{sp:'ow',words:['now','cow','down','town']},{sp:'ou',words:['house','out','loud','cloud']},{sp:'ough',words:['plough']}],
     sents:['The cloud came down around the whole town.','A loud shout from the crowd in the south.'],
@@ -134,7 +134,7 @@ const PHONEMES = [
     mistake:'Don\'t make it too rounded at the start. The journey from open /a/ is key.' },
 
   { id:'vowel_diph_oy',  num:17, ipa:'ɔɪ', name:'OY / OI',      sub:'Diphthong',     cat:'di', file:'vowel_diph_oy',
-    keywords:'boy toy coin voice joy',
+    keywords:'boy coin joy',
     how:'Start with /ɔː/ (rounded lips, back tongue), then GLIDE toward /ɪ/. Tongue moves from back to front. Lips unround as you move.',
     patterns:[{sp:'oy',words:['boy','toy','joy','enjoy']},{sp:'oi',words:['coin','oil','soil','voice']}],
     sents:['The boy joined the royal voyage to avoid the noise.','The soil in the foil was moist with oil.'],
@@ -142,7 +142,7 @@ const PHONEMES = [
     mistake:'Don\'t rhyme "oil" with "ole". It must end with the /ɪ/ glide.' },
 
   { id:'vowel_diph_air', num:18, ipa:'eə', name:'AIR',           sub:'Diphthong',     cat:'di', file:'vowel_diph_air',
-    keywords:'air hair care where bear',
+    keywords:'chair care bear',
     how:'Start /e/ then relax to schwa /ə/. Your jaw opens slightly as you move.',
     patterns:[{sp:'air',words:['air','hair','fair','chair']},{sp:'are',words:['care','dare','share','stare']},{sp:'ear',words:['bear','pear','wear','swear']},{sp:'ere',words:['where','there']},{sp:'eir',words:['their']}],
     sents:['Where is the rare chair with the fair repair?','Beware — a bear may be there near the pear tree.'],
@@ -150,7 +150,7 @@ const PHONEMES = [
     mistake:'In RP, "there" = /ðeə/ not /ðɛːr/. No R colouring!' },
 
   { id:'vowel_diph_ear', num:19, ipa:'ɪə', name:'EAR',           sub:'Diphthong',     cat:'di', file:'vowel_diph_ear',
-    keywords:'ear here near beer deer',
+    keywords:'ear beer here',
     how:'Start /ɪ/ (short i position), then GLIDE toward /ə/ (schwa). Your jaw slightly opens as you move. The first element is stronger.',
     patterns:[{sp:'ear',words:['ear','near','year','fear']},{sp:'eer',words:['beer','deer','cheer','sheer']},{sp:'ere',words:['here','mere','severe']},{sp:'ier',words:['pier','fierce']}],
     sents:['I fear that the deer is near the pier here.','A cheerful engineer appeared.'],
@@ -158,7 +158,7 @@ const PHONEMES = [
     mistake:'Don\'t split it into two syllables. "Year" is one syllable, not "ye-ah".' },
 
   { id:'vowel_diph_oor', num:20, ipa:'ʊə', name:'OOR / CURE',   sub:'Diphthong',     cat:'di', file:'vowel_diph_oor',
-    keywords:'pure cure tour sure your',
+    keywords:'cure tour moor',
     how:'Start with /ʊ/ (lightly rounded lips), then GLIDE toward /ə/ (schwa). Lips gradually unround as you move.',
     patterns:[{sp:'ure',words:['cure','pure','sure','lure']},{sp:'our',words:['tour','your']},{sp:'oor',words:['poor','moor']},{sp:'ewer',words:['fewer','sewer']}],
     sents:['The tour to the pure moor was a sure cure.','I am sure your tour will endure.'],
@@ -167,7 +167,7 @@ const PHONEMES = [
 
   // CONSONANTS — PLOSIVES
   { id:'cons_p', num:21, ipa:'p', name:'P',  sub:'Voiceless Plosive', cat:'pl', file:'cons_p',
-    keywords:'pan pet top cap map',
+    keywords:'pan happy hippo',
     how:'Press your LIPS together firmly. Build up air pressure. Then release suddenly — a burst of air. No voice.',
     patterns:[{sp:'p',words:['pan','pet','top','cap','map','cup','lip','dip','hip','tip']},{sp:'pp',words:['happy','pepper','copper','supper','happen']}],
     sents:['Pick up the purple pen from the top of the page.','The puppy put its paw on the purple cap.'],
@@ -175,7 +175,7 @@ const PHONEMES = [
     mistake:'At the start of stressed syllables, /p/ is aspirated (with a puff). "pan" = /pʰæn/.' },
 
   { id:'cons_b', num:22, ipa:'b', name:'B',  sub:'Voiced Plosive',    cat:'pl', file:'cons_b',
-    keywords:'bat bus cab rib ball',
+    keywords:'bat rabbit building',
     how:'Same lip position as /p/ — press lips together. But ADD VOICE (feel your throat vibrate). Release suddenly. No puff of air like /p/.',
     patterns:[{sp:'b',words:['bat','bus','bag','bit']},{sp:'bb',words:['rabbit','bubble','rubber','ribbon']},{sp:'bu',words:['building','buy']}],
     sents:['Bob bought a big blue bag of bread.','The rabbit bit the rubber ball by the bed.'],
@@ -183,7 +183,7 @@ const PHONEMES = [
     mistake:'At word endings, /b/ is often devoiced. "rob" ends with less vibration.' },
 
   { id:'cons_t', num:23, ipa:'t', name:'T',  sub:'Voiceless Plosive', cat:'pl', file:'cons_t',
-    keywords:'top ten cat sit better',
+    keywords:'tap butter walked',
     how:'Touch the tip of your tongue to the ridge just BEHIND your upper teeth (alveolar ridge). Build up air. Release suddenly with a burst. No voice.',
     patterns:[{sp:'t',words:['tap','ten','sit','hot']},{sp:'tt',words:['butter','better','letter','bottle']},{sp:'ed',words:['walked','jumped','stopped','missed']},{sp:'th',words:['Thomas','thyme']}],
     sents:['Take the hot pot from the table at the top.','The cat sat on the mat and ate the lot.'],
@@ -191,7 +191,7 @@ const PHONEMES = [
     mistake:'In informal British speech, /t/ mid-word becomes a glottal stop. "butter" = /bʌʔə/.' },
 
   { id:'cons_d', num:24, ipa:'d', name:'D',  sub:'Voiced Plosive',    cat:'pl', file:'cons_d',
-    keywords:'dog day bed hard model',
+    keywords:'dog muddy played',
     how:'Same tongue position as /t/ — tip on alveolar ridge. But ADD VOICE. Feel your throat vibrate. Release suddenly.',
     patterns:[{sp:'d',words:['dog','day','bed','mad','did','dug','bad','nod','red']},{sp:'dd',words:['muddy','saddle','middle','fiddle','puddle']},{sp:'ed',words:['played','moved','called','pulled','lived']}],
     sents:['The dog dug a deep ditch in the dark garden.','Did the red bird land on the old dead wood?'],
@@ -199,7 +199,7 @@ const PHONEMES = [
     mistake:'/d/ at word endings is often devoiced. Be careful "bad" doesn\'t sound like "bat".' },
 
   { id:'cons_k', num:25, ipa:'k', name:'K',  sub:'Voiceless Plosive', cat:'pl', file:'cons_k',
-    keywords:'cat key back sick school',
+    keywords:'key cat back',
     how:'Raise the BACK of your tongue to touch the soft palate (velum). Build up air pressure. Release suddenly. No voice.',
     patterns:[{sp:'k',words:['key','king','kind','kit']},{sp:'c',words:['cat','cup','coat','car']},{sp:'ck',words:['back','lock','duck','neck']},{sp:'ch',words:['school','ache']},{sp:'qu',words:['queen','quilt']},{sp:'que',words:['queue','plaque']},{sp:'cc',words:['account','occur']}],
     sents:['Take the black clock and put the key on the back of the box.','Could a cat catch a quick duck?'],
@@ -207,7 +207,7 @@ const PHONEMES = [
     mistake:'Silent K: "knee", "knife", "know", "knock" — the K is not pronounced.' },
 
   { id:'cons_g', num:26, ipa:'g', name:'G',  sub:'Voiced Plosive',    cat:'pl', file:'cons_g',
-    keywords:'get go bag dog bigger',
+    keywords:'get egg ghost',
     how:'Same back-tongue position as /k/. But ADD VOICE — feel your throat vibrate. Release suddenly.',
     patterns:[{sp:'g',words:['get','go','dog','leg']},{sp:'gg',words:['egg','giggle','wiggle','bigger']},{sp:'gh',words:['ghost','ghetto']},{sp:'gue',words:['colleague','vague']},{sp:'gu',words:['guard','guest']}],
     sents:['The big dog got through the green gate in the fog.','Grab the big log and get going.'],
@@ -216,7 +216,7 @@ const PHONEMES = [
 
   // CONSONANTS — FRICATIVES
   { id:'cons_f', num:27, ipa:'f', name:'F',  sub:'Voiceless Fricative', cat:'fr', file:'cons_f',
-    keywords:'fan fish off leaf coffee',
+    keywords:'fan off phone',
     how:'Place your UPPER FRONT TEETH on your lower lip. Push air through the narrow gap. No voice — no throat vibration.',
     patterns:[{sp:'f',words:['fan','fat','fit','fun']},{sp:'ff',words:['off','cliff','staff','stuff']},{sp:'ph',words:['photo','phone','dolphin','elephant']},{sp:'gh',words:['enough','rough']},{sp:'lf',words:['half','calf']}],
     sents:['Fifty fluffy foxes fled from the forest to find food.','Life is often brief — offer fresh fruit.'],
@@ -224,7 +224,7 @@ const PHONEMES = [
     mistake:'Don\'t confuse "ph" words: "phone" = /fəʊn/ not /pəʊn/.' },
 
   { id:'cons_v', num:28, ipa:'v', name:'V',  sub:'Voiced Fricative',   cat:'fr', file:'cons_v',
-    keywords:'van vine love have very',
+    keywords:'van give of',
     how:'Same teeth-on-lip position as /f/. But ADD VOICE — feel your throat vibrate strongly.',
     patterns:[{sp:'v',words:['van','vine','love','vest']},{sp:'ve',words:['give','live']},{sp:'f',words:['of']}],
     sents:['The van drove over the vast valley to the village.','Five brave divers move above the vivid cave.'],
@@ -232,7 +232,7 @@ const PHONEMES = [
     mistake:'Don\'t substitute "w" for "v" — "van" ≠ "wan". Common mistake for some learners.' },
 
   { id:'cons_th_soft', num:29, ipa:'θ', name:'TH (soft)',  sub:'Voiceless Fricative', cat:'fr', file:'cons_th_soft',
-    keywords:'think thank bath path teeth',
+    keywords:'think bath three',
     how:'Place the TIP of your tongue BETWEEN your teeth — or just behind your upper teeth. Push air through. No voice.',
     patterns:[{sp:'th',words:['think','thank','bath','path','teeth','thin','thick','three','thread','through']}],
     sents:['Think through the method — three paths are worth a thought.','The thin thread stretched through the thick cloth.'],
@@ -240,7 +240,7 @@ const PHONEMES = [
     mistake:'Don\'t replace with /s/ or /f/ — "think" ≠ "sink", "three" ≠ "free".' },
 
   { id:'cons_th_hard', num:30, ipa:'ð', name:'TH (hard)',  sub:'Voiced Fricative',   cat:'fr', file:'cons_th_hard',
-    keywords:'the this that them with',
+    keywords:'the mother this',
     how:'Same tongue position as /θ/. But ADD VOICE — feel a buzzy vibration. This sound feels "thicker" than /θ/.',
     patterns:[{sp:'th',words:['the','this','that','them','with','they','then','there','thus','mother']}],
     sents:['They would rather bathe in the smooth weather together.','The mother breathes through those other paths.'],
@@ -248,7 +248,7 @@ const PHONEMES = [
     mistake:'Don\'t replace with /d/ or /z/ — "this" ≠ "dis". Feel the tongue between the teeth.' },
 
   { id:'cons_s', num:31, ipa:'s', name:'S',  sub:'Voiceless Fricative', cat:'fr', file:'cons_s',
-    keywords:'sun see bus miss city',
+    keywords:'sun miss city',
     how:'Bring tongue tip CLOSE (not touching) to the alveolar ridge. Channel air down the middle of your tongue. A thin, sharp hiss. No voice.',
     patterns:[{sp:'s',words:['sun','bus','sad','sit']},{sp:'ss',words:['miss','class','dress','cross']},{sp:'c',words:['city','cell','rice','nice']},{sp:'sc',words:['scene','science']},{sp:'ps',words:['psyche','psalm']},{sp:'x',words:['tax','fox']},{sp:'ce',words:['place','face']},{sp:'se',words:['please','mouse']},{sp:'cy',words:['bicycle','fancy']}],
     sents:['The six swans sat still on the soft surface of the sea.','Susan sells the finest sea salt.'],
@@ -256,7 +256,7 @@ const PHONEMES = [
     mistake:'Don\'t over-hiss. Also: "s" after voiced sounds = /z/ (dogs /dɒgz/).' },
 
   { id:'cons_z', num:32, ipa:'z', name:'Z',  sub:'Voiced Fricative',   cat:'fr', file:'cons_z',
-    keywords:'zoo zero buzz is his',
+    keywords:'zip buzz dogs',
     how:'Same as /s/ but ADD VOICE. The "buzz" of the voice adds a low vibration to the hiss.',
     patterns:[{sp:'z',words:['zip','zoo','zero','zone']},{sp:'zz',words:['buzz','jazz']},{sp:'s',words:['dogs','rose','nose','easy']},{sp:'se',words:['cheese','these']},{sp:'ze',words:['squeeze','breeze']},{sp:'x',words:['xylophone']}],
     sents:['The bees in the busy zone buzzed near the frozen roses.','Zoe\'s clothes were frozen in the blizzard.'],
@@ -264,7 +264,7 @@ const PHONEMES = [
     mistake:'Don\'t confuse -s plural rules: /s/ after voiceless, /z/ after voiced sounds.' },
 
   { id:'cons_sh', num:33, ipa:'ʃ', name:'SH', sub:'Voiceless Fricative', cat:'fr', file:'cons_sh',
-    keywords:'ship shoe fish push nation',
+    keywords:'ship chef nation',
     how:'Bring your tongue to a broad, flat position slightly further back than /s/. Lips slightly rounded and protruded. "Shhhh" — like quieting someone.',
     patterns:[{sp:'sh',words:['ship','shoe','fish','wish']},{sp:'ch',words:['chef','machine']},{sp:'ti',words:['nation','station','action','mention']},{sp:'ssi',words:['mission','passion']},{sp:'ci',words:['special','social','official','ancient']},{sp:'si',words:['tension','version']},{sp:'s',words:['sugar','sure']}],
     sents:['She shushed the children by the fish and chip shop.','The flashy fashion show featured fresh shrubbery.'],
@@ -272,7 +272,7 @@ const PHONEMES = [
     mistake:'Don\'t use /s/ instead of /ʃ/. "Ship" and "sip" are different sounds!' },
 
   { id:'cons_zh', num:34, ipa:'ʒ', name:'ZH', sub:'Voiced Fricative',   cat:'fr', file:'cons_zh',
-    keywords:'measure vision beige genre',
+    keywords:'vision measure beige',
     how:'Same position as /ʃ/ but ADD VOICE. The voiced version of "sh". Mainly in borrowed French words and "-sion"/"-sure" endings.',
     patterns:[{sp:'si',words:['vision','decision','television','revision']},{sp:'su',words:['measure','treasure','pleasure','leisure']},{sp:'ge',words:['beige','mirage','garage','camouflage']},{sp:'z',words:['azure','seizure']},{sp:'g',words:['genre']}],
     sents:['The television showed a vision of beige leisure.','It is a pleasure to measure the treasure.'],
@@ -280,7 +280,7 @@ const PHONEMES = [
     mistake:'Don\'t substitute /dʒ/ for /ʒ/. "Measure" = /meʒə/ not /medʒə/.' },
 
   { id:'cons_h', num:35, ipa:'h', name:'H',  sub:'Voiceless Fricative', cat:'fr', file:'cons_h',
-    keywords:'hat hot home behind who',
+    keywords:'hat who hill',
     how:'Simply breathe out through your open mouth and throat. No specific tongue or lip position — just an airy rush of breath.',
     patterns:[{sp:'h',words:['hat','hot','hit','hop','hub','had','him','has','hug','hen']},{sp:'wh',words:['who','whole','whose']}],
     sents:['He held his hat over his head in the heavy heat.','The happy hamster hid behind the huge hedge.'],
@@ -289,7 +289,7 @@ const PHONEMES = [
 
   // CONSONANTS — AFFRICATES
   { id:'cons_ch', num:36, ipa:'tʃ', name:'CH', sub:'Voiceless Affricate', cat:'af', file:'cons_ch',
-    keywords:'chip church match watch teach',
+    keywords:'chair catch picture',
     how:'Start with /t/ (tongue on ridge), then immediately release into /ʃ/ (sh sound). A TWO-PART sound that feels like one smooth movement.',
     patterns:[{sp:'ch',words:['chair','chip','teach','church']},{sp:'tch',words:['catch','match','watch','fetch']},{sp:'t',words:['picture','future','creature','feature']},{sp:'ture',words:['nature','culture']}],
     sents:['Choose the right chair and watch the champion teach the children.','The rich butcher watched the sketch catch fire.'],
@@ -297,7 +297,7 @@ const PHONEMES = [
     mistake:'Don\'t make it just /ʃ/ (sh). "Chair" needs the /t/ burst before the /ʃ/ flow.' },
 
   { id:'cons_j', num:37, ipa:'dʒ', name:'J',  sub:'Voiced Affricate',   cat:'af', file:'cons_j',
-    keywords:'jet job age bridge major',
+    keywords:'jump giant bridge',
     how:'Same movement as /tʃ/ but VOICED. Start with /d/ then release into /ʒ/. Feel your throat vibrate throughout.',
     patterns:[{sp:'j',words:['jump','jar','joy','just']},{sp:'g',words:['giant','gem','gentle','giraffe']},{sp:'dge',words:['bridge','hedge','judge','ridge']},{sp:'ge',words:['cage','huge']},{sp:'gy',words:['gym','allergy']},{sp:'di',words:['soldier','gradual']}],
     sents:['The judge in the large cage urged John to jump the bridge.','The giant giraffe juggled jars of jam.'],
@@ -306,7 +306,7 @@ const PHONEMES = [
 
   // CONSONANTS — NASALS
   { id:'cons_m', num:38, ipa:'m', name:'M',  sub:'Nasal',              cat:'na', file:'cons_m',
-    keywords:'man make come swim him',
+    keywords:'mat hammer lamb',
     how:'Close your LIPS. Let air flow through your NOSE. Voice resonates in nasal cavity. A humming sound. Feel your nose vibrate.',
     patterns:[{sp:'m',words:['mat','me','ham','mud']},{sp:'mm',words:['hammer','summer','swimmer','comment']},{sp:'mb',words:['lamb','comb','thumb','climb']},{sp:'mn',words:['column','autumn']},{sp:'me',words:['come','some']}],
     sents:['The mum made some warm meatballs for the summer meal.','The lamb climbed through the morning mist.'],
@@ -314,7 +314,7 @@ const PHONEMES = [
     mistake:'Silent M before N: "mnemonic" = /nɪˈmɒnɪk/.' },
 
   { id:'cons_n', num:39, ipa:'n', name:'N',  sub:'Nasal',              cat:'na', file:'cons_n',
-    keywords:'no name ten can funny',
+    keywords:'net running know',
     how:'Touch the tip of your tongue to the alveolar ridge (same as /t/ and /d/). Let air flow through your NOSE.',
     patterns:[{sp:'n',words:['net','no','ten','nap']},{sp:'nn',words:['running','dinner','winner','connect']},{sp:'kn',words:['know','knee','knife','knock']},{sp:'gn',words:['gnome','gnaw']},{sp:'ne',words:['phone']}],
     sents:['Now and then, in the morning sun, ten thin lines narrow into one.','The knight knocked and kneeled.'],
@@ -322,7 +322,7 @@ const PHONEMES = [
     mistake:'Silent KN: "know" = /nəʊ/. The K is completely silent in kn- words.' },
 
   { id:'cons_ng', num:40, ipa:'ŋ', name:'NG', sub:'Nasal',              cat:'na', file:'cons_ng',
-    keywords:'sing ring long thing young',
+    keywords:'king think drink',
     how:'Raise the BACK of your tongue to touch the soft palate (same as /k/ and /g/). Let air flow through your NOSE. Tongue tip is DOWN.',
     patterns:[{sp:'ng',words:['king','ring','long','song']},{sp:'n',words:['think','bank','sink','drink']},{sp:'nk',words:['think','drink']}],
     sents:['The king sang a long song, ringing a gong.','The young gang clung to the strong climbing ring.'],
@@ -331,7 +331,7 @@ const PHONEMES = [
 
   // CONSONANTS — APPROXIMANTS
   { id:'cons_l', num:41, ipa:'l', name:'L',  sub:'Lateral Approximant', cat:'ap', file:'cons_l',
-    keywords:'leg like ball feel milk',
+    keywords:'leg bell table',
     how:'Touch tongue TIP to the alveolar ridge. Let air flow around the SIDES of the tongue (not the middle). "Clear L" before vowels; "dark L" (velarised) at end of syllables.',
     patterns:[{sp:'l',words:['leg','tall','let','lip']},{sp:'ll',words:['bell','fill','well','hill']},{sp:'le',words:['table','bottle','little','people']},{sp:'al',words:['camel','capital']},{sp:'il',words:['pencil','fossil']}],
     sents:['The tall lad lay along the long wall like a log.','Tell the little girl to pull the ball slowly.'],
@@ -339,7 +339,7 @@ const PHONEMES = [
     mistake:'Don\'t substitute /r/ for /l/ or vice versa. "Light" ≠ "right"; "long" ≠ "rong".' },
 
   { id:'cons_r', num:42, ipa:'r', name:'R',  sub:'Approximant',         cat:'ap', file:'cons_r',
-    keywords:'run red car very three',
+    keywords:'red carry write',
     how:'Curl or bunch the tip of your tongue back, toward (but not touching) the area just behind the alveolar ridge. Round your lips slightly.',
     patterns:[{sp:'r',words:['red','run','rain','rug']},{sp:'rr',words:['carrot','carry','arrow','mirror']},{sp:'wr',words:['write','wrong','wrap','wrist']},{sp:'rh',words:['rhino','rhythm']}],
     sents:['The red rabbit ran rapidly across the rocky river.','Rain rarely rushes around the rural roads.'],
@@ -347,7 +347,7 @@ const PHONEMES = [
     mistake:'British RP does NOT pronounce R at end of words or before consonants. "Bird" = /bɜːd/ not /bɜːrd/.' },
 
   { id:'cons_w', num:43, ipa:'w', name:'W',  sub:'Approximant',         cat:'ap', file:'cons_w',
-    keywords:'wet win we swim always',
+    keywords:'wet when queen',
     how:'Round your lips into a tight circle (like /uː/ position). Raise the back of your tongue. Then immediately GLIDE into the following vowel.',
     patterns:[{sp:'w',words:['water','wet','swim','win']},{sp:'wh',words:['when','where','which','wheel']},{sp:'u',words:['queen','quiet']},{sp:'o',words:['one','once']}],
     sents:['We will wait by the wide waterway and watch the waves.','Quick! Where is the white whale?'],
@@ -355,7 +355,7 @@ const PHONEMES = [
     mistake:'Silent W: "write", "wrong", "wrap", "wrist", "wren", "sword" — no W sound.' },
 
   { id:'cons_y', num:44, ipa:'j', name:'Y',  sub:'Approximant',         cat:'ap', file:'cons_y',
-    keywords:'yes you year yell beyond',
+    keywords:'yes use feud',
     how:'Raise the FRONT-MIDDLE of your tongue toward the hard palate. Glide quickly into the following vowel. Start from /ɪ/ position then move.',
     patterns:[{sp:'y',words:['yes','yet','yell','year']},{sp:'u',words:['use','unit','uniform','useful']},{sp:'ew',words:['new','few','dew','skew']},{sp:'eu',words:['feud','Europe']}],
     sents:['Yes, you can use your yellow yarn in the yard.','A few years ago, the youngsters ruled.'],
