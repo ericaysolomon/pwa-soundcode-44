@@ -635,8 +635,7 @@ function ipaLongPressStart(word, e) {
   ipaLongPressCancel();
   _ipaLongPressTimer = setTimeout(() => {
     _ipaLongPressTimer = null;
-    if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
-    speakWord(word);
+    playWord(word);
   }, 400);
 }
 function ipaLongPressCancel() {
