@@ -458,7 +458,7 @@ let gameCategory = 'all';
 let deferredInstallPrompt = null;
 
 // ── Premium / licence key control ─────────────────────────────────────────────
-const FREE_SECTIONS = new Set(['welcome','howto','foundations','ms']);
+const FREE_SECTIONS = new Set(['welcome','howto','foundations','ms','ipa-chart']);
 let isPremium = false;
 
 // Restore premium state from localStorage and silently re-validate with server
