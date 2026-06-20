@@ -629,6 +629,17 @@ function playSound(fileBase) {
   a.play().catch(() => showToast('Audio file not found'));
 }
 
+let _ipaLongPressTimer = null;
+function ipaLongPressStart(word) {
+  _ipaLongPressTimer = setTimeout(() => {
+    if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+    speakWord(word);
+  }, 500);
+}
+function ipaLongPressCancel() {
+  if (_ipaLongPressTimer) { clearTimeout(_ipaLongPressTimer); _ipaLongPressTimer = null; }
+}
+
 function speakPhoneme(ipa) {
   const path = AUDIO_MAP[ipa];
   if (!path) { showToast('No audio for ' + ipa); return; }
@@ -827,9 +838,14 @@ function ipaCell(ipa, cls, label) {
   const ph = PHONEMES.find(p => p.ipa === ipa);
   const kw0 = ph ? ph.keywords.split(' ')[0] : ipa;
   const labelHtml = label ? `<span style="font-size:9px;opacity:0.6;font-weight:700;display:block;margin-bottom:2px">${label}</span>` : '';
-  return `<div class="ipa-cell ${cls}" title="${ipa} — click: sound · dblclick: sample word"
+  return `<div class="ipa-cell ${cls}" title="${ipa} — tap: sound · hold: sample word"
     onclick="speakPhoneme('${escQ(ipa)}')"
-    ondblclick="speakWord('${escQ(kw0)}')">
+    onmousedown="ipaLongPressStart('${escQ(kw0)}')"
+    onmouseup="ipaLongPressCancel()"
+    onmouseleave="ipaLongPressCancel()"
+    ontouchstart="ipaLongPressStart('${escQ(kw0)}')"
+    ontouchend="ipaLongPressCancel()"
+    ontouchmove="ipaLongPressCancel()">
     ${labelHtml}
     <span class="ipa-cell-sym">${ipa}</span>
     <span class="ipa-cell-ex">${kw0}</span>
