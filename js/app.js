@@ -630,6 +630,22 @@ function playSound(fileBase) {
 }
 
 let _ipaLongPressTimer = null;
+let _ipaTouchMoved = false;
+function ipaTouchStart(ipa, word, e) {
+  _ipaTouchMoved = false;
+  ipaLongPressCancel();
+  _ipaLongPressTimer = setTimeout(() => {
+    _ipaLongPressTimer = null;
+    if (!_ipaTouchMoved) playWord(word);
+  }, 400);
+}
+function ipaTouchEnd(ipa) {
+  if (_ipaLongPressTimer) {
+    clearTimeout(_ipaLongPressTimer);
+    _ipaLongPressTimer = null;
+    if (!_ipaTouchMoved) speakPhoneme(ipa);
+  }
+}
 function ipaLongPressStart(word, e) {
   if (e && e.cancelable) e.preventDefault();
   ipaLongPressCancel();
@@ -845,8 +861,8 @@ function ipaCell(ipa, cls, label) {
     onmousedown="ipaLongPressStart('${escQ(kw0)}')"
     onmouseup="ipaLongPressCancel()"
     onmouseleave="ipaLongPressCancel()"
-    ontouchstart="ipaLongPressStart('${escQ(kw0)}',event)"
-    ontouchend="ipaLongPressCancel()"
+    ontouchstart="ipaTouchStart('${escQ(ipa)}','${escQ(kw0)}',event)"
+    ontouchend="ipaTouchEnd('${escQ(ipa)}')"
     ontouchmove="ipaLongPressCancel()">
     ${labelHtml}
     <span class="ipa-cell-sym">${ipa}</span>
