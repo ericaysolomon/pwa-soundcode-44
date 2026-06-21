@@ -1680,7 +1680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderContent();
   });
 
-  document.getElementById('sidebar-header').addEventListener('click', toggleSidebar);
+  // sidebar-header click removed to prevent conflict with phoneme audio button
 
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
