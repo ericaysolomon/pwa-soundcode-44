@@ -927,11 +927,16 @@ function qnCard(id, icon, label, sub) {
 }
 
 function renderWelcome() {
-  const installBanner = deferredInstallPrompt ? `
-<div class="install-banner">
-  <p>📲 <strong>Install SoundCode 44</strong> — add it to your home screen for instant access, anytime.</p>
-  <button class="install-btn" onclick="triggerInstall()">Install App</button>
-</div>` : '';
+  const installBanner = (() => {
+  const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
+  if (isInstalled) return '';
+  if (deferredInstallPrompt) return `<div class="install-banner"><p>📲 <strong>Install SoundCode 44</strong> — add it to your home screen for instant access, anytime.</p><button class="install-btn" onclick="triggerInstall()">Install App</button></div>`;
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const isAndroidDevice = /Android/i.test(navigator.userAgent);
+  if (isIOS) return `<div class="install-banner"><p>📲 <strong>Install SoundCode 44</strong> — tap the Share button in Safari then select "Add to Home Screen" for instant access.</p></div>`;
+  if (isAndroidDevice) return `<div class="install-banner"><p>📲 <strong>Install SoundCode 44</strong> — tap your browser menu and select "Add to Home Screen" for instant access.</p></div>`;
+  return '';
+})();
 
   return `
 ${installBanner}
