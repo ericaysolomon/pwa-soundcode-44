@@ -491,6 +491,19 @@ function isLocked(id) {
   return !isPremium && !FREE_SECTIONS.has(id);
 }
 
+async function getPremiumLink() {
+  const gumroadUrl = 'https://thriveenglish.gumroad.com/l/ynxtkb?wanted=true&offer_code=FOUNDING';
+  const selfanyUrl = 'https://selfany.com/SoundCode44';
+  const africanCountries = ['NG','GH','KE','ZA','EG','ET','TZ','UG','CM','CI','SN','ZM','ZW','RW','MZ','AO','MG','BJ','BF','ML','NE','TD','SO','SS','ER','DJ','CF','CG','CD','GA','GQ','ST','CV','KM','MU','SC','LY','TN','DZ','MA','SD','MR','GM','GW','SL','LR','GN','TG','LS','SZ','BW','NA','MW'];
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    const data = await res.json();
+    window.open(africanCountries.includes(data.country_code) ? selfanyUrl : gumroadUrl, '_blank');
+  } catch(e) {
+    window.open(gumroadUrl, '_blank');
+  }
+}
+
 function showPremiumOverlay() {
   document.getElementById('premium-overlay').classList.add('open');
   document.getElementById('prem-code-area').classList.remove('show');
