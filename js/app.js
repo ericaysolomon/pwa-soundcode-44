@@ -557,7 +557,10 @@ async function submitAccessCode() {
       buildSidebar();
       updateSidebar();
       renderContent();
-      showToast('✓ Full access unlocked! Enjoy all 44 phonemes.');
+      const _msg = currentKeyType === 'lifetime' ? '✓ Lifetime access unlocked! You can install the app for offline use.' :
+                   currentKeyType === 'review'   ? '✓ Review access granted. Expires in 24–48 hours.' :
+                   '✓ Full access unlocked! Enjoy all 44 phonemes.';
+      showToast(_msg);
     } else {
       msg.textContent = data.error || 'Invalid licence key — please try again.';
       msg.style.color = '#e53935';
