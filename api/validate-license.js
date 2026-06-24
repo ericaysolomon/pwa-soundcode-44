@@ -27,6 +27,8 @@ module.exports = async function handler(req, res) {
     // ADD REVIEW KEYS HERE:
     // 'REVIEW-STAFF01': 1750000000000,
     // 'REVIEW-TEACH01': 1750000000000,
+    'REVIEW-STAFF01': 1782432717967,
+    'REVIEW-TEACH01': 1782432717967,
   };
 
   if (trimmedKey.startsWith('REVIEW-')) {
