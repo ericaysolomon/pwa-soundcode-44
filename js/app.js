@@ -1205,7 +1205,8 @@ function renderIPAChart() {
       ${conRow2}
     </div>
   </div>
-  <div class="ipa-mobile-hint" style="text-align:center;margin-bottom:8px;">Tap &#x26F6; for a larger view of consonants</div>
+  <div class="ipa-mobile-hint" style="text-align:center;margin-bottom:4px;">Tap &#x26F6; for a larger view of consonants</div>
+  <div class="ipa-rotate-hint">&#x21BB; Rotate your phone for a better view</div>
   <div class="ipa-chart-hint">vl = voiceless · vd = voiced · Tap = isolated sound · Hold = sample word</div>
 </div>`;
 }

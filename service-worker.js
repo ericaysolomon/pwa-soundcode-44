@@ -1,4 +1,4 @@
-const CACHE_NAME = 'soundcode44-v4';
+const CACHE_NAME = 'soundcode44-v5';
 
 const STATIC_ASSETS = [
   '/',

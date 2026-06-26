@@ -626,12 +626,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 /* Mobile hint text - only on small screens */
 .ipa-mobile-hint {
-  display: none;
+  display: block;
   font-size: 11px;
   color: #888;
   margin-top: 8px;
   text-align: center;
   letter-spacing: 0.3px;
+}
+@media (min-width: 641px) {
+  .ipa-mobile-hint { display: none !important; }
 }
 @media (max-width: 640px) {
   .ipa-mobile-hint { display: block !important; }
@@ -677,4 +680,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     min-height: 0 !important;
     padding: 4px 2px !important;
   }
+}
+
+/* Rotate hint for consonants on mobile */
+.ipa-rotate-hint {
+  display: none;
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+@media (max-width: 640px) and (orientation: portrait) {
+  .ipa-rotate-hint { display: block !important; }
 }
