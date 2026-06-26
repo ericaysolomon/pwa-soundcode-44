@@ -563,3 +563,63 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ipa-section-block {
   overflow: hidden !important;
 }
+
+/* IPA chart mobile responsive fixes */
+
+/* Monophthongs - 4 cols, scale to fit */
+.ipa-subsection .ipa-cell-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+.ipa-subsection .ipa-cell {
+  flex: 1 1 0;
+  min-width: 0 !important;
+  max-width: 100px;
+}
+
+/* Diphthongs - stretch to fill available width */
+.ipa-subsection:last-child .ipa-cell {
+  flex: 1 1 0;
+  min-width: 0 !important;
+}
+
+/* Vowels row - side by side, each subsection fills its half */
+.ipa-subsection-row {
+  display: flex !important;
+  gap: 16px !important;
+  align-items: flex-start;
+  width: 100%;
+}
+.ipa-subsection {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  width: 100%;
+}
+
+/* Consonants - horizontal scroll on mobile */
+.ipa-con-grid {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  width: 100% !important;
+  padding-bottom: 8px !important;
+}
+.ipa-con-grid .ipa-cell-row {
+  display: flex;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+  width: max-content;
+}
+.ipa-con-grid .ipa-cell {
+  min-width: 70px !important;
+  max-width: 70px !important;
+  flex-shrink: 0 !important;
+}
+
+/* IPA sub divider hidden on very small screens */
+@media (max-width: 480px) {
+  .ipa-sub-divider { display: none !important; }
+  .ipa-subsection-row { gap: 8px !important; }
+}

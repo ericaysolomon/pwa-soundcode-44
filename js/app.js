@@ -1203,7 +1203,7 @@ function renderIPAChart() {
       ${conRow2}
     </div>
   </div>
-  <div class="ipa-chart-hint">vl = voiceless · vd = voiced · Single click plays isolated sound · Double click plays sample word</div>
+  <div class="ipa-chart-hint">vl = voiceless · vd = voiced · Tap = isolated sound · Hold = sample word</div>
 </div>`;
 }
 
