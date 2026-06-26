@@ -1176,7 +1176,7 @@ function renderIPAChart() {
 <div class="ipa-chart-outer">
   <div class="section-header">
     <div class="section-title">📊 IPA Chart — 44 British English Phonemes</div>
-    <div class="section-subtitle">Single click → isolated sound · Double click → sample word</div>
+    <div class="section-subtitle">Tap → isolated sound · Hold → sample word</div>
   </div>
   <div class="ipa-section-block">
     <div class="ipa-section-header">VOWELS — 20 phonemes</div>

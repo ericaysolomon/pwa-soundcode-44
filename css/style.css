@@ -458,17 +458,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   width: 100%;
 }
 .ipa-fullscreen-btn {
-  background: rgba(255,255,255,0.18);
-  border: 1px solid rgba(255,255,255,0.35);
+  background: #C9973A;
+  border: none;
   border-radius: 6px;
-  color: rgba(255,255,255,0.9);
+  color: #0D2B55;
   font-size: 13px;
-  padding: 3px 7px;
+  font-weight: 700;
+  padding: 4px 9px;
   cursor: pointer;
   flex-shrink: 0;
   margin-left: 8px;
 }
-.ipa-fullscreen-btn:hover { background: rgba(255,255,255,0.32); }
+.ipa-fullscreen-btn:hover { background: #b8862e; }
 .cons-fs-btn {
   margin-right: 4px;
 }
@@ -491,8 +492,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .con-vd .ipa-cell,
 .con-nas .ipa-cell,
 .con-app .ipa-cell {
-  min-width: 62px !important;
-  padding: 7px 4px !important;
+  min-width: 76px !important;
+  padding: 8px 4px !important;
 }
 
 /* IPA fullscreen modal content */
@@ -534,4 +535,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ipa-modal-grid .ipa-cell-row {
   gap: 8px !important;
   margin-bottom: 8px !important;
+}
+
+/* IPA chart - bigger cells and centred grids */
+.ipa-chart-outer .ipa-cell {
+  min-width: 76px !important;
+  min-height: 76px !important;
+}
+.ipa-chart-outer .ipa-cell-sym {
+  font-size: 26px !important;
+}
+.ipa-chart-outer .ipa-cell-ex {
+  font-size: 11px !important;
+}
+.ipa-chart-outer .ipa-cell-row {
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
+.ipa-subsection-row {
+  justify-content: flex-start !important;
+  gap: 32px !important;
+}
+.ipa-con-grid {
+  width: fit-content !important;
+  margin: 0 auto !important;
+}
+.ipa-section-block {
+  overflow: hidden !important;
 }
