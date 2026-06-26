@@ -492,16 +492,53 @@ function isLocked(id) {
 }
 
 async function getPremiumLink() {
-  const gumroadUrl = 'https://thriveenglish.gumroad.com/l/ynxtkb?wanted=true&offer_code=FOUNDING';
-  const selfanyUrl = 'https://selfany.com/SoundCode44';
   const africanCountries = ['NG','GH','KE','ZA','EG','ET','TZ','UG','CM','CI','SN','ZM','ZW','RW','MZ','AO','MG','BJ','BF','ML','NE','TD','SO','SS','ER','DJ','CF','CG','CD','GA','GQ','ST','CV','KM','MU','SC','LY','TN','DZ','MA','SD','MR','GM','GW','SL','LR','GN','TG','LS','SZ','BW','NA','MW'];
   try {
     const res = await fetch('https://ipapi.co/json/');
     const data = await res.json();
-    window.open(africanCountries.includes(data.country_code) ? selfanyUrl : gumroadUrl, '_blank');
+    if (africanCountries.includes(data.country_code)) {
+      showAfricanPlanPicker();
+    } else {
+      window.open('https://thriveenglish.gumroad.com/l/ynxtkb?wanted=true&offer_code=FOUNDING', '_blank');
+    }
   } catch(e) {
-    window.open(gumroadUrl, '_blank');
+    window.open('https://thriveenglish.gumroad.com/l/ynxtkb?wanted=true&offer_code=FOUNDING', '_blank');
   }
+}
+
+function showAfricanPlanPicker() {
+  const existing = document.getElementById('plan-picker-overlay');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'plan-picker-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,43,85,0.88);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;';
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  overlay.innerHTML = `
+    <div style="background:#fff;border-radius:18px;width:100%;max-width:420px;padding:32px 24px;text-align:center;animation:cardModalSlide 0.22s ease;">
+      <div style="font-size:20px;font-weight:700;color:#0D2B55;margin-bottom:6px;">Choose Your Plan</div>
+      <div style="font-size:13px;color:#888;margin-bottom:24px;">Africa pricing — secure checkout via Selfany</div>
+      <div style="display:flex;gap:14px;margin-bottom:20px;">
+        <div style="flex:1;border:2px solid #1A7A6E;border-radius:12px;padding:18px 12px;cursor:pointer;" onclick="window.open('https://selfany.com/SoundCode44','_blank');document.getElementById('plan-picker-overlay').remove();">
+          <div style="font-size:12px;font-weight:700;color:#1A7A6E;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Annual</div>
+          <div style="font-size:28px;font-weight:700;color:#0D2B55;margin-bottom:4px;">$19.99</div>
+          <div style="font-size:12px;color:#888;margin-bottom:14px;">per year</div>
+          <div style="background:#1A7A6E;color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;display:block;">Get Annual</div>
+        </div>
+        <div style="flex:1;border:2px solid #C9973A;border-radius:12px;padding:18px 12px;cursor:pointer;" onclick="window.open('https://selfany.com/SoundCode44Lifetime','_blank');document.getElementById('plan-picker-overlay').remove();">
+          <div style="font-size:12px;font-weight:700;color:#C9973A;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Lifetime</div>
+          <div style="font-size:28px;font-weight:700;color:#0D2B55;margin-bottom:4px;">$49.99</div>
+          <div style="font-size:12px;color:#888;margin-bottom:14px;">one-time</div>
+          <div style="background:#C9973A;color:#0D2B55;border:none;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer;display:block;">Get Lifetime</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#aaa;">&#x2715; <span style="cursor:pointer;" onclick="document.getElementById('plan-picker-overlay').remove();">Close</span></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
 }
 
 function showPremiumOverlay() {
