@@ -1184,11 +1184,13 @@ function renderIPAChart() {
       <div class="ipa-subsection">
         <div class="ipa-sublabel-row"><div class="ipa-sublabel">Monophthongs (12)</div><button class="ipa-fullscreen-btn" onclick="showIPASectionFullscreen('mono')">&#x26F6;</button></div>
         ${monoRows}
+        <div class="ipa-mobile-hint">Tap &#x26F6; for a larger view</div>
       </div>
       <div class="ipa-sub-divider"></div>
       <div class="ipa-subsection">
         <div class="ipa-sublabel-row"><div class="ipa-sublabel">Diphthongs (8)</div><button class="ipa-fullscreen-btn" onclick="showIPASectionFullscreen('diph')">&#x26F6;</button></div>
         ${diphRows}
+        <div class="ipa-mobile-hint">Tap &#x26F6; for a larger view</div>
       </div>
     </div>
   </div>
@@ -1203,6 +1205,7 @@ function renderIPAChart() {
       ${conRow2}
     </div>
   </div>
+  <div class="ipa-mobile-hint" style="text-align:center;margin-bottom:8px;">Tap &#x26F6; for a larger view of consonants</div>
   <div class="ipa-chart-hint">vl = voiceless · vd = voiced · Tap = isolated sound · Hold = sample word</div>
 </div>`;
 }
