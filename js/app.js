@@ -916,6 +916,7 @@ function buildCard(ph) {
       <div class="ph-kws">${kw1} · ${kw2} · ${kw3}</div>
     </div>
     <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Sample Words</button>
+    <button class="fullscreen-btn" onclick="showCardFullscreen('${ph.id}')">&#x26F6; Full View</button>
   </div>
   <div class="ph-how">
     <div class="ph-how-label">🖐 How to Make This Sound</div>
@@ -940,6 +941,53 @@ function qnCard(id, icon, label, sub) {
     <div class="qn-label">${label}</div>
     <div class="qn-sub">${sub}</div>
   </div>`;
+}
+
+
+// -- Fullscreen card modal --
+function showCardFullscreen(id) {
+  const ph = PHONEMES.find(p => p.id === id);
+  if (!ph) return;
+  closeCardFullscreen();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'card-modal-overlay';
+  overlay.id = 'card-modal-overlay';
+
+  // Close on backdrop tap
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeCardFullscreen();
+  });
+
+  // Swipe down to close on mobile
+  let touchStartY = 0;
+  overlay.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  overlay.addEventListener('touchmove', function(e) {
+    const box = overlay.querySelector('.card-modal-box');
+    if (!box) return;
+    const scrollTop = box.scrollTop;
+    const diff = e.touches[0].clientY - touchStartY;
+    if (scrollTop <= 0 && diff > 80) {
+      closeCardFullscreen();
+    }
+  }, { passive: true });
+
+  const cardHtml = buildCard(ph);
+  overlay.innerHTML =
+    '<div class="card-modal-box">' +
+    '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">✕</button></div>' +
+    cardHtml +
+    '</div>';
+
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCardFullscreen() {
+  const o = document.getElementById('card-modal-overlay');
+  if (o) { o.remove(); document.body.style.overflow = ''; }
 }
 
 function renderWelcome() {
@@ -1691,6 +1739,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSidebar();
   renderContent();
 
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCardFullscreen();
+  });
   document.getElementById('search-box').addEventListener('input', e => {
     searchQuery = e.target.value.trim();
     renderContent();
