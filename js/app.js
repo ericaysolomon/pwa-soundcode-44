@@ -708,27 +708,21 @@ function speakWord(w) {
 }
 
 function speakKeywords(w1, w2, w3) {
-  function speakTTS(text, onend) {
-    if (!window.speechSynthesis) { if (onend) onend(); return; }
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.85; u.lang = "en-GB";
-    u.onend = onend || null;
-    window.speechSynthesis.speak(u);
-  }
-  function playMP3(word, onend) {
-    const path = "audio/word_" + word.toLowerCase().replace(/[^a-z]/g, "") + ".mp3";
+  function playMP3(path, onend) {
     if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
     const audio = new Audio(path);
     currentAudio = audio;
     audio.onended = onend || null;
     audio.play().catch(() => { if (onend) onend(); });
   }
-  speakTTS("Listen carefully to the sample words.", () => {
-    playMP3(w1, () => {
-      playMP3(w2, () => {
-        playMP3(w3, () => {
-          speakTTS("Now you try.", null);
+  function playWord(word, onend) {
+    playMP3("audio/word_" + word.toLowerCase().replace(/[^a-z]/g, "") + ".mp3", onend);
+  }
+  playMP3("audio/intro_listen.mp3", () => {
+    playWord(w1, () => {
+      playWord(w2, () => {
+        playWord(w3, () => {
+          playMP3("audio/intro_nowtry.mp3", null);
         });
       });
     });
