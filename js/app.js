@@ -915,8 +915,10 @@ function buildCard(ph) {
       <div class="ph-sub">${ph.sub}</div>
       <div class="ph-kws">${kw1} · ${kw2} · ${kw3}</div>
     </div>
-    <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Sample Words</button>
-    <button class="fullscreen-btn" onclick="showCardFullscreen('${ph.id}')">&#x26F6; Full View</button>
+    <div class="ph-head-buttons">
+      <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Sample Words</button>
+      <button class="fullscreen-btn" onclick="showCardFullscreen('${ph.id}')">&#x26F6; Full View</button>
+    </div>
   </div>
   <div class="ph-how">
     <div class="ph-how-label">🖐 How to Make This Sound</div>
