@@ -947,6 +947,8 @@ function qnCard(id, icon, label, sub) {
 
 
 // -- Fullscreen card modal --
+let _modalHistoryPushed = false;
+
 function showCardFullscreen(id) {
   const ph = PHONEMES.find(p => p.id === id);
   if (!ph) return;
@@ -985,11 +987,18 @@ function showCardFullscreen(id) {
 
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
+  // Push history state so back button/gesture closes modal
+  history.pushState({cardModal: true}, '');
+  _modalHistoryPushed = true;
 }
 
 function closeCardFullscreen() {
   const o = document.getElementById('card-modal-overlay');
   if (o) { o.remove(); document.body.style.overflow = ''; }
+  if (_modalHistoryPushed) {
+    _modalHistoryPushed = false;
+    history.back();
+  }
 }
 
 function renderWelcome() {
@@ -1743,6 +1752,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeCardFullscreen();
+  });
+  // Handle browser back button/gesture to close modal
+  window.addEventListener('popstate', function(e) {
+    _modalHistoryPushed = false;
+    const o = document.getElementById('card-modal-overlay');
+    if (o) { o.remove(); document.body.style.overflow = ''; }
   });
   document.getElementById('search-box').addEventListener('input', e => {
     searchQuery = e.target.value.trim();
