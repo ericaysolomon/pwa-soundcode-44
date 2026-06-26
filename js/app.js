@@ -1001,6 +1001,95 @@ function closeCardFullscreen() {
   }
 }
 
+
+// -- IPA Section Fullscreen --
+function showIPASectionFullscreen(section) {
+  closeCardFullscreen();
+
+  const cfg = {
+    mono: {
+      title: 'Monophthongs',
+      count: '12 phonemes',
+      hint: 'Tap \u2192 isolated sound \u00b7 Hold \u2192 sample word',
+      build: function() {
+        const rows = [
+          ['i\u02d0','\u026a','\u028a','u\u02d0'],
+          ['e','\u0259','\u025c\u02d0','\u0254\u02d0'],
+          ['\u00e6','\u028c','\u0251\u02d0','\u0252']
+        ];
+        return rows.map(r => '<div class="ipa-cell-row">' + r.map(s => ipaCell(s,'mono')).join('') + '</div>').join('');
+      }
+    },
+    diph: {
+      title: 'Diphthongs',
+      count: '8 phonemes',
+      hint: 'Tap \u2192 isolated sound \u00b7 Hold \u2192 sample word',
+      build: function() {
+        const rows = [
+          ['\u026a\u0259','e\u026a',null],
+          ['\u028a\u0259','\u0254\u026a','\u0259\u028a'],
+          ['e\u0259','a\u026a','a\u028a']
+        ];
+        return rows.map(r => '<div class="ipa-cell-row">' + r.map(s => ipaCell(s,'diph')).join('') + '</div>').join('');
+      }
+    },
+    cons: {
+      title: 'Consonants',
+      count: '24 phonemes',
+      hint: 'Tap \u2192 isolated sound \u00b7 Hold \u2192 sample word \u00b7 VL\u00a0=\u00a0voiceless \u00b7 VD\u00a0=\u00a0voiced',
+      build: function() {
+        const c = [
+          ['p','b','t','d','t\u0283','d\u0292','k','g'],
+          ['f','v','\u03b8','\u00f0','s','z','\u0283','\u0292'],
+          ['m','n','\u014b','h','l','r','w','j']
+        ];
+        const cls = [
+          ['con-vl','con-vd','con-vl','con-vd','con-vl','con-vd','con-vl','con-vd'],
+          ['con-vl','con-vd','con-vl','con-vd','con-vl','con-vd','con-vl','con-vd'],
+          ['con-nas','con-nas','con-nas','con-vl','con-app','con-app','con-app','con-app']
+        ];
+        const r0 = '<div class="ipa-cell-row">' + c[0].map((s,i) => ipaCell(s,cls[0][i],i%2===0?'VL':'VD')).join('') + '</div>';
+        const r1 = '<div class="ipa-cell-row">' + c[1].map((s,i) => ipaCell(s,cls[1][i],i%2===0?'VL':'VD')).join('') + '</div>';
+        const note = '<div style="font-size:12px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin:12px 0 4px">Nasals &amp; Approximants \u2014 all voiced \u00b7 /h/ = voiceless</div>';
+        const r2 = '<div class="ipa-cell-row">' + c[2].map((s,i) => ipaCell(s,cls[2][i])).join('') + '</div>';
+        return r0 + r1 + note + r2;
+      }
+    }
+  };
+
+  const s = cfg[section];
+  if (!s) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'card-modal-overlay';
+  overlay.id = 'card-modal-overlay';
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeCardFullscreen();
+  });
+
+  let touchStartY = 0;
+  overlay.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; }, {passive:true});
+  overlay.addEventListener('touchmove', function(e) {
+    const box = overlay.querySelector('.card-modal-box');
+    if (!box) return;
+    if (box.scrollTop <= 0 && e.touches[0].clientY - touchStartY > 80) closeCardFullscreen();
+  }, {passive:true});
+
+  overlay.innerHTML =
+    '<div class="card-modal-box ipa-modal-box">' +
+    '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">\u2715</button></div>' +
+    '<div class="ipa-modal-content">' +
+    '<div class="ipa-modal-title">' + s.title + ' <span class="ipa-modal-count">' + s.count + '</span></div>' +
+    '<div class="ipa-modal-hint">' + s.hint + '</div>' +
+    '<div class="ipa-modal-grid">' + s.build() + '</div>' +
+    '</div></div>';
+
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+  history.pushState({cardModal: true}, '');
+  _modalHistoryPushed = true;
+}
+
 function renderWelcome() {
   const installBanner = (() => {
   const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
@@ -1093,18 +1182,18 @@ function renderIPAChart() {
     <div class="ipa-section-header">VOWELS — 20 phonemes</div>
     <div class="ipa-subsection-row">
       <div class="ipa-subsection">
-        <div class="ipa-sublabel">Monophthongs (12)</div>
+        <div class="ipa-sublabel-row"><div class="ipa-sublabel">Monophthongs (12)</div><button class="ipa-fullscreen-btn" onclick="showIPASectionFullscreen('mono')">&#x26F6;</button></div>
         ${monoRows}
       </div>
       <div class="ipa-sub-divider"></div>
       <div class="ipa-subsection">
-        <div class="ipa-sublabel">Diphthongs (8)</div>
+        <div class="ipa-sublabel-row"><div class="ipa-sublabel">Diphthongs (8)</div><button class="ipa-fullscreen-btn" onclick="showIPASectionFullscreen('diph')">&#x26F6;</button></div>
         ${diphRows}
       </div>
     </div>
   </div>
   <div class="ipa-section-block">
-    <div class="ipa-section-header">CONSONANTS — 24 phonemes</div>
+    <div class="ipa-section-header-row"><div class="ipa-section-header">CONSONANTS — 24 phonemes</div><button class="ipa-fullscreen-btn cons-fs-btn" onclick="showIPASectionFullscreen('cons')">&#x26F6;</button></div>
     <div class="ipa-con-grid">
       ${conRow0}
       ${conRow1}

@@ -443,3 +443,95 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sp-tag {
   align-self: center !important;
 }
+
+/* IPA sublabel row with fullscreen button */
+.ipa-sublabel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.ipa-section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.ipa-fullscreen-btn {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  padding: 3px 7px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+.ipa-fullscreen-btn:hover { background: rgba(255,255,255,0.32); }
+.cons-fs-btn {
+  margin-right: 4px;
+}
+
+/* IPA spacing fixes - shrink to content */
+.ipa-subsection-row {
+  justify-content: flex-start !important;
+  gap: 20px !important;
+  flex-wrap: nowrap !important;
+}
+.ipa-subsection {
+  flex: 0 0 auto !important;
+}
+.ipa-con-grid {
+  width: fit-content !important;
+}
+
+/* Widen consonant cells */
+.con-vl .ipa-cell,
+.con-vd .ipa-cell,
+.con-nas .ipa-cell,
+.con-app .ipa-cell {
+  min-width: 62px !important;
+  padding: 7px 4px !important;
+}
+
+/* IPA fullscreen modal content */
+.ipa-modal-box {
+  max-width: 640px !important;
+}
+.ipa-modal-content {
+  padding: 12px 20px 28px;
+}
+.ipa-modal-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0D2B55;
+  margin-bottom: 6px;
+}
+.ipa-modal-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  margin-left: 6px;
+}
+.ipa-modal-hint {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+}
+.ipa-modal-grid .ipa-cell {
+  min-width: 68px !important;
+  min-height: 68px !important;
+  font-size: 24px !important;
+}
+.ipa-modal-grid .ipa-cell-sym {
+  font-size: 26px !important;
+}
+.ipa-modal-grid .ipa-cell-ex {
+  font-size: 12px !important;
+}
+.ipa-modal-grid .ipa-cell-row {
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+}
