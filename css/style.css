@@ -769,3 +769,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     font-size: clamp(9px, 1vw, 12px) !important;
   }
 }
+
+/* Pat-row mobile fix - keep sp-tag with its words on same line */
+@media (max-width: 640px) {
+  .pat-row {
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  .sp-tag {
+    flex-shrink: 0 !important;
+    align-self: flex-start !important;
+    margin-top: 4px !important;
+  }
+  .word-chips {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+  .wchip {
+    flex-shrink: 0 !important;
+  }
+}
