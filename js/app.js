@@ -539,6 +539,7 @@ function showAfricanPlanPicker() {
     </div>
   `;
   document.body.appendChild(overlay);
+  history.pushState({planPicker:true},'');
 }
 
 function showPremiumOverlay() {
@@ -1882,6 +1883,8 @@ document.addEventListener('DOMContentLoaded', () => {
     _modalHistoryPushed = false;
     const o = document.getElementById('card-modal-overlay');
     if (o) { o.remove(); document.body.style.overflow = ''; }
+    const p = document.getElementById('plan-picker-overlay');
+    if (p) p.remove();
   });
   document.getElementById('search-box').addEventListener('input', e => {
     searchQuery = e.target.value.trim();
