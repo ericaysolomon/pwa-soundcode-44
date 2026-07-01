@@ -1062,9 +1062,9 @@ function _renderCardFullscreen(ph, dir) {
     const box = overlay.querySelector('.card-modal-box');
     if (box) {
       box.classList.add(dir > 0 ? 'fs-slide-in-right' : 'fs-slide-in-left');
-      setTimeout(function() {
+      box.addEventListener('animationend', function() {
         box.classList.remove('fs-slide-in-right', 'fs-slide-in-left');
-      }, 200);
+      }, { once: true });
     }
   }
 }
