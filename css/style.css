@@ -891,3 +891,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     padding: 8px 10px !important;
   }
 }
+
+/* Alternating card backgrounds */
+.ph-card-alt {
+  background: #F8F6F1 !important;
+}
+
+/* Fullscreen nav bar */
+.fs-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 4px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.fs-nav-btn {
+  background: #0D2B55;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fs-nav-btn:disabled {
+  background: #ccc;
+  cursor: default;
+}
+.fs-nav-btn:not(:disabled):hover { background: #C9973A; }
+.fs-nav-counter {
+  font-size: 13px;
+  color: #888;
+  font-weight: 600;
+}

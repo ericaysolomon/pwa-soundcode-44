@@ -934,7 +934,7 @@ function buildCard(ph) {
   ).join('') : '';
 
   return `
-<div class="ph-card ${ph.cat}" id="card-${ph.id}">
+<div class="ph-card ${ph.cat}${ph.num % 2 === 0 ? ' ph-card-alt' : ''}" id="card-${ph.id}">
   <div class="ph-head">
     <div class="ph-head-left">
       <span class="ph-num">${ph.num}</span>
@@ -982,10 +982,30 @@ function qnCard(id, icon, label, sub) {
 // -- Fullscreen card modal --
 let _modalHistoryPushed = false;
 
+// Track current phoneme index for swipeable fullscreen
+let _fsCurrentId = null;
+let _fsCatPhonemes = [];
+
 function showCardFullscreen(id) {
   const ph = PHONEMES.find(p => p.id === id);
   if (!ph) return;
   closeCardFullscreen();
+
+  // Build category phoneme list for swiping
+  _fsCurrentId = id;
+  _fsCatPhonemes = currentSection === 'all' || !currentSection
+    ? PHONEMES
+    : PHONEMES.filter(p => p.cat === ph.cat);
+  if (_fsCatPhonemes.length === 0) _fsCatPhonemes = PHONEMES;
+
+  _renderCardFullscreen(ph);
+  history.pushState({cardModal: true}, '');
+  _modalHistoryPushed = true;
+}
+
+function _renderCardFullscreen(ph) {
+  const existing = document.getElementById('card-modal-overlay');
+  if (existing) existing.remove();
 
   const overlay = document.createElement('div');
   overlay.className = 'card-modal-overlay';
@@ -996,33 +1016,58 @@ function showCardFullscreen(id) {
     if (e.target === overlay) closeCardFullscreen();
   });
 
-  // Swipe down to close on mobile
+  // Touch handling - swipe down to close, left/right to navigate
+  let touchStartX = 0;
   let touchStartY = 0;
   overlay.addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
-  overlay.addEventListener('touchmove', function(e) {
+  overlay.addEventListener('touchend', function(e) {
     const box = overlay.querySelector('.card-modal-box');
     if (!box) return;
-    const scrollTop = box.scrollTop;
-    const diff = e.touches[0].clientY - touchStartY;
-    if (scrollTop <= 0 && diff > 80) {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
+      if (dx < 0) _fsNavigate(1);
+      else _fsNavigate(-1);
+    } else if (dy > 80 && box.scrollTop <= 0) {
       closeCardFullscreen();
     }
   }, { passive: true });
 
-  const cardHtml = buildCard(ph);
+  const idx = _fsCatPhonemes.findIndex(p => p.id === ph.id);
+  const total = _fsCatPhonemes.length;
+  const hasPrev = idx > 0;
+  const hasNext = idx < total - 1;
+
+  const cardHtml = buildCard(ph).replace(/onclick="handleCardClick[^"]*"/g, '');
+
+  const navBar = '<div class="fs-nav-bar">'
+    + '<button class="fs-nav-btn" ' + (hasPrev ? '' : 'disabled') + ' onclick="_fsNavigate(-1)">← Prev</button>'
+    + '<span class="fs-nav-counter">' + (idx+1) + ' / ' + total + '</span>'
+    + '<button class="fs-nav-btn" ' + (hasNext ? '' : 'disabled') + ' onclick="_fsNavigate(1)">Next →</button>'
+    + '</div>';
+
   overlay.innerHTML =
     '<div class="card-modal-box">' +
     '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">✕</button></div>' +
+    navBar +
     cardHtml +
     '</div>';
 
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
-  // Push history state so back button/gesture closes modal
-  history.pushState({cardModal: true}, '');
-  _modalHistoryPushed = true;
+}
+
+function _fsNavigate(dir) {
+  const idx = _fsCatPhonemes.findIndex(p => p.id === _fsCurrentId);
+  const next = idx + dir;
+  if (next < 0 || next >= _fsCatPhonemes.length) return;
+  _fsCurrentId = _fsCatPhonemes[next].id;
+  const box = document.querySelector('.card-modal-box');
+  if (box) box.scrollTop = 0;
+  _renderCardFullscreen(_fsCatPhonemes[next]);
 }
 
 function closeCardFullscreen() {
