@@ -893,14 +893,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 }
 
 /* Alternating card header backgrounds */
-.ph-card-alt.ml .ph-head { background: #1255a0 !important; }
-.ph-card-alt.ms .ph-head { background: #7a4a00 !important; }
-.ph-card-alt.di .ph-head { background: #433a9a !important; }
-.ph-card-alt.pl .ph-head { background: #cc4800 !important; }
-.ph-card-alt.fr .ph-head { background: #256828 !important; }
-.ph-card-alt.af .ph-head { background: #720c42 !important; }
-.ph-card-alt.na .ph-head { background: #3a2088 !important; }
-.ph-card-alt.ap .ph-head { background: #0a3d8a !important; }
+.ph-card-alt .ph-head { filter: brightness(0.82) !important; }
 /* Carousel fullscreen */
 .fs-carousel {
   overflow: hidden;
