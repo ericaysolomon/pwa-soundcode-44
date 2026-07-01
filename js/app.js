@@ -544,6 +544,7 @@ function showAfricanPlanPicker() {
 
 function showPremiumOverlay() {
   document.getElementById('premium-overlay').classList.add('open');
+  history.pushState({premiumOverlay:true},'');
   document.getElementById('prem-code-area').classList.remove('show');
   document.getElementById('prem-code-input').value = '';
   document.getElementById('prem-code-msg').textContent = '';
@@ -1885,6 +1886,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (o) { o.remove(); document.body.style.overflow = ''; }
     const p = document.getElementById('plan-picker-overlay');
     if (p) p.remove();
+    const prem = document.getElementById('premium-overlay');
+    if (prem) prem.classList.remove('open');
   });
   document.getElementById('search-box').addEventListener('input', e => {
     searchQuery = e.target.value.trim();
