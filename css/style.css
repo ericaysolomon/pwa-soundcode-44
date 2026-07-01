@@ -793,3 +793,101 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     flex-shrink: 0 !important;
   }
 }
+
+/* Small screen fixes (360-390px phones) */
+@media (max-width: 390px) {
+  #content {
+    padding: 12px !important;
+  }
+  #topbar {
+    padding: 8px 12px !important;
+    gap: 8px !important;
+  }
+  #topbar-title {
+    font-size: 13px !important;
+  }
+  #search-box {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+  .ph-card {
+    padding: 14px 12px !important;
+  }
+  .ph-head {
+    gap: 8px !important;
+  }
+  .ph-ipa {
+    font-size: 32px !important;
+  }
+  .ph-name {
+    font-size: 16px !important;
+  }
+  .ph-sub {
+    font-size: 11px !important;
+  }
+  .ph-kws {
+    font-size: 11px !important;
+  }
+  .phoneme-btn {
+    font-size: 11px !important;
+    padding: 4px 8px !important;
+  }
+  .listen-btn {
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+  }
+  .fullscreen-btn {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+  .wchip {
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+  }
+  .sent-row {
+    font-size: 13px !important;
+  }
+  .sent-play {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+  .tip-box, .mistake-box {
+    font-size: 12px !important;
+    padding: 10px 12px !important;
+  }
+  .ph-how-text {
+    font-size: 13px !important;
+  }
+  .nav-item {
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+  }
+  .section-title {
+    font-size: 17px !important;
+  }
+  .qn-card {
+    padding: 10px 6px !important;
+  }
+  .qn-label {
+    font-size: 11px !important;
+  }
+  .qn-sub {
+    font-size: 10px !important;
+  }
+  .welcome-hero h1 {
+    font-size: 18px !important;
+  }
+  .welcome-hero p {
+    font-size: 13px !important;
+  }
+  .stat-box .stat-num {
+    font-size: 20px !important;
+  }
+  .game-question {
+    font-size: 15px !important;
+  }
+  .game-option {
+    font-size: 13px !important;
+    padding: 8px 10px !important;
+  }
+}
