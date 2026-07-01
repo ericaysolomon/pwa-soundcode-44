@@ -1074,16 +1074,7 @@ function _fsNavigate(dir) {
   const next = idx + dir;
   if (next < 0 || next >= _fsCatPhonemes.length) return;
   _fsCurrentId = _fsCatPhonemes[next].id;
-  const box = document.querySelector('.card-modal-box');
-  if (box) {
-    box.scrollTop = 0;
-    box.classList.add(dir > 0 ? 'fs-slide-out-left' : 'fs-slide-out-right');
-    setTimeout(function() {
-      _renderCardFullscreen(_fsCatPhonemes[next], dir);
-    }, 150);
-  } else {
-    _renderCardFullscreen(_fsCatPhonemes[next], dir);
-  }
+  _renderCardFullscreen(_fsCatPhonemes[next], dir);
 }
 
 function closeCardFullscreen() {
