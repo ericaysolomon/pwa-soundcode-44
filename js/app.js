@@ -1005,6 +1005,33 @@ function showCardFullscreen(id) {
 
 function _renderCardFullscreen(ph, dir) {
   const existing = document.getElementById('card-modal-overlay');
+  // If modal already exists, just swap content without recreating
+  if (existing && dir !== undefined) {
+    const contentArea = existing.querySelector('.fs-card-content');
+    if (contentArea) {
+      const cardHtml = buildCard(ph).replace(/onclick="handleCardClick[^"]*"/g, '');
+      const idx = _fsCatPhonemes.findIndex(p => p.id === ph.id);
+      const total = _fsCatPhonemes.length;
+      const hasPrev = idx > 0;
+      const hasNext = idx < total - 1;
+      const navBar = '<div class="fs-nav-bar">'
+        + '<button class="fs-nav-btn" ' + (hasPrev ? '' : 'disabled') + ' onclick="_fsNavigate(-1)">← Prev</button>'
+        + '<span class="fs-nav-counter">' + (idx+1) + ' / ' + total + '</span>'
+        + '<button class="fs-nav-btn" ' + (hasNext ? '' : 'disabled') + ' onclick="_fsNavigate(1)">Next →</button>'
+        + '</div>';
+      contentArea.style.opacity = '0';
+      contentArea.style.transform = dir > 0 ? 'translateX(40px)' : 'translateX(-40px)';
+      setTimeout(function() {
+        contentArea.innerHTML = navBar + cardHtml;
+        existing.querySelector('.card-modal-box').scrollTop = 0;
+        contentArea.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+        contentArea.style.opacity = '1';
+        contentArea.style.transform = 'translateX(0)';
+        setTimeout(function() { contentArea.style.transition = ''; }, 220);
+      }, 80);
+      return;
+    }
+  }
   if (existing) existing.remove();
 
   const overlay = document.createElement('div');
@@ -1052,8 +1079,7 @@ function _renderCardFullscreen(ph, dir) {
   overlay.innerHTML =
     '<div class="card-modal-box">' +
     '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">✕</button></div>' +
-    navBar +
-    cardHtml +
+    '<div class="fs-card-content">' + navBar + cardHtml + '</div>' +
     '</div>';
 
   document.body.appendChild(overlay);
