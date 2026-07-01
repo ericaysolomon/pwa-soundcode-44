@@ -982,125 +982,132 @@ function qnCard(id, icon, label, sub) {
 // -- Fullscreen card modal --
 let _modalHistoryPushed = false;
 
-// Track current phoneme index for swipeable fullscreen
-let _fsCurrentId = null;
+// ── Carousel fullscreen ────────────────────────────────────────────────────
+let _fsCurrentId  = null;
 let _fsCatPhonemes = [];
+let _fsNavigating  = false;
 
 function showCardFullscreen(id) {
   const ph = PHONEMES.find(p => p.id === id);
   if (!ph) return;
   closeCardFullscreen();
 
-  // Build category phoneme list for swiping
-  _fsCurrentId = id;
-  _fsCatPhonemes = currentSection === 'all' || !currentSection
+  _fsCurrentId   = id;
+  _fsCatPhonemes = (currentSection === 'all' || !currentSection)
     ? PHONEMES
     : PHONEMES.filter(p => p.cat === ph.cat);
-  if (_fsCatPhonemes.length === 0) _fsCatPhonemes = PHONEMES;
+  if (!_fsCatPhonemes.length) _fsCatPhonemes = PHONEMES;
 
-  _renderCardFullscreen(ph);
+  _buildCarousel();
   history.pushState({cardModal: true}, '');
   _modalHistoryPushed = true;
 }
 
-function _renderCardFullscreen(ph, dir) {
-  const existing = document.getElementById('card-modal-overlay');
-  // If modal already exists, just swap content without recreating
-  if (existing && dir !== undefined) {
-    const contentArea = existing.querySelector('.fs-card-content');
-    if (contentArea) {
-      const cardHtml = buildCard(ph).replace(/onclick="handleCardClick[^"]*"/g, '');
-      const idx = _fsCatPhonemes.findIndex(p => p.id === ph.id);
-      const total = _fsCatPhonemes.length;
-      const hasPrev = idx > 0;
-      const hasNext = idx < total - 1;
-      const navBar = '<div class="fs-nav-bar">'
-        + '<button class="fs-nav-btn" ' + (hasPrev ? '' : 'disabled') + ' onclick="_fsNavigate(-1)">← Prev</button>'
-        + '<span class="fs-nav-counter">' + (idx+1) + ' / ' + total + '</span>'
-        + '<button class="fs-nav-btn" ' + (hasNext ? '' : 'disabled') + ' onclick="_fsNavigate(1)">Next →</button>'
-        + '</div>';
-      contentArea.style.opacity = '0';
-      contentArea.style.transform = dir > 0 ? 'translateX(40px)' : 'translateX(-40px)';
-      setTimeout(function() {
-        contentArea.innerHTML = navBar + cardHtml;
-        existing.querySelector('.card-modal-box').scrollTop = 0;
-        contentArea.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-        contentArea.style.opacity = '1';
-        contentArea.style.transform = 'translateX(0)';
-        setTimeout(function() { contentArea.style.transition = ''; }, 220);
-      }, 80);
-      return;
-    }
-  }
-  if (existing) existing.remove();
+function _fsSlotHTML(i) {
+  if (i < 0 || i >= _fsCatPhonemes.length) return '<div style="height:100%;"></div>';
+  return buildCard(_fsCatPhonemes[i]).replace(/onclick="handleCardClick[^"]*"/g, '');
+}
 
+function _fsNavHTML(i, total) {
+  return '<div class="fs-nav-bar" id="fs-nav-bar">'
+    + '<button class="fs-nav-btn"' + (i > 0 ? '' : ' disabled') + ' onclick="_fsNavigate(-1)">\u2190 Prev</button>'
+    + '<span class="fs-nav-counter">' + (i + 1) + ' / ' + total + '</span>'
+    + '<button class="fs-nav-btn"' + (i < total - 1 ? '' : ' disabled') + ' onclick="_fsNavigate(1)">Next \u2192</button>'
+    + '</div>';
+}
+
+function _buildCarousel() {
   const overlay = document.createElement('div');
   overlay.className = 'card-modal-overlay';
-  overlay.id = 'card-modal-overlay';
+  overlay.id        = 'card-modal-overlay';
 
-  // Close on backdrop tap
   overlay.addEventListener('click', function(e) {
     if (e.target === overlay) closeCardFullscreen();
   });
 
-  // Touch handling - swipe down to close, left/right to navigate
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let tx = 0, ty = 0, active = false;
   overlay.addEventListener('touchstart', function(e) {
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+    active = true;
   }, { passive: true });
   overlay.addEventListener('touchend', function(e) {
+    if (!active) return; active = false;
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
     const box = overlay.querySelector('.card-modal-box');
-    if (!box) return;
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    const dy = e.changedTouches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
-      if (dx < 0) _fsNavigate(1);
-      else _fsNavigate(-1);
-    } else if (dy > 80 && box.scrollTop <= 0) {
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      _fsNavigate(dx < 0 ? 1 : -1);
+    } else if (dy > 80 && box && box.scrollTop <= 0) {
       closeCardFullscreen();
     }
   }, { passive: true });
 
-  const idx = _fsCatPhonemes.findIndex(p => p.id === ph.id);
+  const ci = _fsCatPhonemes.findIndex(p => p.id === _fsCurrentId);
   const total = _fsCatPhonemes.length;
-  const hasPrev = idx > 0;
-  const hasNext = idx < total - 1;
-
-  const cardHtml = buildCard(ph).replace(/onclick="handleCardClick[^"]*"/g, '');
-
-  const navBar = '<div class="fs-nav-bar">'
-    + '<button class="fs-nav-btn" ' + (hasPrev ? '' : 'disabled') + ' onclick="_fsNavigate(-1)">← Prev</button>'
-    + '<span class="fs-nav-counter">' + (idx+1) + ' / ' + total + '</span>'
-    + '<button class="fs-nav-btn" ' + (hasNext ? '' : 'disabled') + ' onclick="_fsNavigate(1)">Next →</button>'
-    + '</div>';
 
   overlay.innerHTML =
     '<div class="card-modal-box">' +
-    '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">✕</button></div>' +
-    '<div class="fs-card-content">' + navBar + cardHtml + '</div>' +
+      '<div class="card-modal-close-bar"><button class="card-modal-close-btn" onclick="closeCardFullscreen()">\u2715</button></div>' +
+      _fsNavHTML(ci, total) +
+      '<div class="fs-carousel">' +
+        '<div class="fs-track" id="fs-track">' +
+          '<div class="fs-slot" id="fs-slot-0">' + _fsSlotHTML(ci - 1) + '</div>' +
+          '<div class="fs-slot" id="fs-slot-1">' + _fsSlotHTML(ci)     + '</div>' +
+          '<div class="fs-slot" id="fs-slot-2">' + _fsSlotHTML(ci + 1) + '</div>' +
+        '</div>' +
+      '</div>' +
     '</div>';
 
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
-  if (dir !== undefined) {
-    const box = overlay.querySelector('.card-modal-box');
-    if (box) {
-      box.classList.add(dir > 0 ? 'fs-slide-in-right' : 'fs-slide-in-left');
-      box.addEventListener('animationend', function() {
-        box.classList.remove('fs-slide-in-right', 'fs-slide-in-left');
-      }, { once: true });
-    }
-  }
 }
 
 function _fsNavigate(dir) {
-  const idx = _fsCatPhonemes.findIndex(p => p.id === _fsCurrentId);
-  const next = idx + dir;
+  if (_fsNavigating) return;
+  const ci   = _fsCatPhonemes.findIndex(p => p.id === _fsCurrentId);
+  const next = ci + dir;
   if (next < 0 || next >= _fsCatPhonemes.length) return;
-  _fsCurrentId = _fsCatPhonemes[next].id;
-  _renderCardFullscreen(_fsCatPhonemes[next], dir);
+  _fsNavigating = true;
+
+  const track = document.getElementById('fs-track');
+  if (!track) { _fsNavigating = false; return; }
+
+  // Slide the track
+  const targetX = dir > 0 ? '-66.666%' : '0%';
+  track.style.transition = 'transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
+  track.style.transform  = 'translateX(' + targetX + ')';
+
+  track.addEventListener('transitionend', function done() {
+    track.removeEventListener('transitionend', done);
+
+    // Snap back silently
+    track.style.transition = 'none';
+    track.style.transform  = 'translateX(-33.333%)';
+
+    // Update state
+    _fsCurrentId = _fsCatPhonemes[next].id;
+    const total  = _fsCatPhonemes.length;
+
+    // Refresh all three slots
+    document.getElementById('fs-slot-0').innerHTML = _fsSlotHTML(next - 1);
+    document.getElementById('fs-slot-1').innerHTML = _fsSlotHTML(next);
+    document.getElementById('fs-slot-2').innerHTML = _fsSlotHTML(next + 1);
+
+    // Refresh nav bar
+    const nav = document.getElementById('fs-nav-bar');
+    if (nav) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = _fsNavHTML(next, total);
+      nav.replaceWith(tmp.firstChild);
+    }
+
+    // Reset scroll
+    const box = document.querySelector('.card-modal-box');
+    if (box) box.scrollTop = 0;
+
+    _fsNavigating = false;
+  }, { once: true });
 }
 
 function closeCardFullscreen() {

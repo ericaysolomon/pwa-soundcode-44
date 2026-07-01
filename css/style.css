@@ -896,20 +896,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ph-card-alt .ph-head {
   filter: brightness(0.88) !important;
 }
-/* Fullscreen card slide animations */
-@keyframes fsSlideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+/* Carousel fullscreen */
+.fs-carousel {
+  overflow: hidden;
+  width: 100%;
 }
-@keyframes fsSlideInLeft {
-  from { transform: translateX(-100%); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+.fs-track {
+  display: flex;
+  width: 300%;
+  transform: translateX(-33.333%);
+  will-change: transform;
 }
-.card-modal-box {
-  will-change: transform, opacity;
+.fs-slot {
+  width: 33.333%;
+  flex-shrink: 0;
+  overflow-y: auto;
 }
-.fs-slide-in-right { animation: fsSlideInRight 0.25s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
-.fs-slide-in-left  { animation: fsSlideInLeft  0.25s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
 
 /* Fullscreen nav bar */
 .fs-nav-bar {
