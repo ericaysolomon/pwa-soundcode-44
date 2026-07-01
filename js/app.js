@@ -1003,7 +1003,7 @@ function showCardFullscreen(id) {
   _modalHistoryPushed = true;
 }
 
-function _renderCardFullscreen(ph) {
+function _renderCardFullscreen(ph, dir) {
   const existing = document.getElementById('card-modal-overlay');
   if (existing) existing.remove();
 
@@ -1058,6 +1058,15 @@ function _renderCardFullscreen(ph) {
 
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
+  if (dir !== undefined) {
+    const box = overlay.querySelector('.card-modal-box');
+    if (box) {
+      box.classList.add(dir > 0 ? 'fs-slide-in-right' : 'fs-slide-in-left');
+      setTimeout(function() {
+        box.classList.remove('fs-slide-in-right', 'fs-slide-in-left');
+      }, 200);
+    }
+  }
 }
 
 function _fsNavigate(dir) {
@@ -1066,8 +1075,15 @@ function _fsNavigate(dir) {
   if (next < 0 || next >= _fsCatPhonemes.length) return;
   _fsCurrentId = _fsCatPhonemes[next].id;
   const box = document.querySelector('.card-modal-box');
-  if (box) box.scrollTop = 0;
-  _renderCardFullscreen(_fsCatPhonemes[next]);
+  if (box) {
+    box.scrollTop = 0;
+    box.classList.add(dir > 0 ? 'fs-slide-out-left' : 'fs-slide-out-right');
+    setTimeout(function() {
+      _renderCardFullscreen(_fsCatPhonemes[next], dir);
+    }, 150);
+  } else {
+    _renderCardFullscreen(_fsCatPhonemes[next], dir);
+  }
 }
 
 function closeCardFullscreen() {
