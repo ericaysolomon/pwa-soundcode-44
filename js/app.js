@@ -1276,7 +1276,7 @@ async function submitEmailCapture() {
       body: JSON.stringify({ email: email })
     });
 
-    if (res.status === 201 || res.status === 204) {
+    if (res.status === 200 || res.status === 201 || res.status === 204) {
       localStorage.setItem('sc44_email_captured', '1');
       const banner = document.getElementById('email-capture-banner');
       if (banner) {
