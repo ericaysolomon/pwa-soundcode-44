@@ -943,3 +943,89 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   color: #888;
   font-weight: 600;
 }
+
+/* Email capture banner */
+#email-capture-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  padding: 0 16px 16px;
+}
+#email-capture-banner.ecb-visible {
+  transform: translateY(0);
+}
+.ecb-content {
+  background: #fff;
+  border-radius: 16px 16px 12px 12px;
+  box-shadow: 0 -4px 24px rgba(13,43,85,0.18);
+  padding: 24px 20px 20px;
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ecb-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+}
+.ecb-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+.ecb-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0D2B55;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.ecb-sub {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.ecb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ecb-input {
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.ecb-input:focus { border-color: #0D2B55; }
+.ecb-btn {
+  background: #C9973A;
+  color: #0D2B55;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+.ecb-btn:hover { background: #b8862e; }
+.ecb-btn:disabled { opacity: 0.6; cursor: default; }
+.ecb-note {
+  font-size: 11px;
+  color: #bbb;
+}

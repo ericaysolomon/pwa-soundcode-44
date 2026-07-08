@@ -597,7 +597,7 @@ async function submitAccessCode() {
       updateSidebar();
       renderContent();
       const _msg = currentKeyType === 'lifetime' ? '✓ Lifetime access unlocked! You can install the app for offline use.' :
-                   currentKeyType === 'review'   ? '✓ Review access granted. Expires in 24–48 hours.' :
+                   currentKeyType === 'review'   ? '✓ Review access granted.' :
                    '✓ Full access unlocked! Enjoy all 44 phonemes.';
       showToast(_msg);
     } else {
@@ -1208,6 +1208,92 @@ function showIPASectionFullscreen(section) {
   _modalHistoryPushed = true;
 }
 
+
+// ── Email Capture ────────────────────────────────────────────────────────────
+let _emailCaptureShown = false;
+let _emailCaptureTimer = null;
+
+function startEmailCaptureTimer() {
+  if (_emailCaptureShown) return;
+  if (isPremium) return;
+  if (localStorage.getItem('sc44_email_captured')) return;
+  clearTimeout(_emailCaptureTimer);
+  _emailCaptureTimer = setTimeout(function() {
+    if (!isPremium && !_emailCaptureShown && !localStorage.getItem('sc44_email_captured')) {
+      showEmailCaptureBanner();
+    }
+  }, 90000);
+}
+
+function showEmailCaptureBanner() {
+  if (_emailCaptureShown) return;
+  _emailCaptureShown = true;
+
+  const banner = document.createElement('div');
+  banner.id = 'email-capture-banner';
+  banner.innerHTML =
+    '<div class="ecb-content">' +
+    '<button class="ecb-close" onclick="dismissEmailBanner()">&#x2715;</button>' +
+    '<div class="ecb-icon">&#127942;</div>' +
+    '<div class="ecb-title">Get Your Free Pronunciation Assessment Checklist</div>' +
+    '<div class="ecb-sub">Identify your key sound challenges in 5 minutes. Free — no strings attached.</div>' +
+    '<div class="ecb-form">' +
+    '<input type="email" id="ecb-email-input" class="ecb-input" placeholder="Enter your email address" />' +
+    '<button class="ecb-btn" onclick="submitEmailCapture()">Send Me the Checklist</button>' +
+    '</div>' +
+    '<div class="ecb-note">No spam. Unsubscribe anytime.</div>' +
+    '</div>';
+
+  document.body.appendChild(banner);
+  setTimeout(function() { banner.classList.add('ecb-visible'); }, 50);
+}
+
+function dismissEmailBanner() {
+  const banner = document.getElementById('email-capture-banner');
+  if (banner) {
+    banner.classList.remove('ecb-visible');
+    setTimeout(function() { banner.remove(); }, 300);
+  }
+}
+
+async function submitEmailCapture() {
+  const input = document.getElementById('ecb-email-input');
+  if (!input) return;
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = '#e65100';
+    input.placeholder = 'Please enter a valid email';
+    return;
+  }
+
+  const btn = document.querySelector('.ecb-btn');
+  if (btn) { btn.textContent = 'Sending...'; btn.disabled = true; }
+
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
+
+    if (res.status === 201 || res.status === 204) {
+      localStorage.setItem('sc44_email_captured', '1');
+      const banner = document.getElementById('email-capture-banner');
+      if (banner) {
+        banner.querySelector('.ecb-content').innerHTML =
+          '<div class="ecb-icon">&#10003;</div>' +
+          '<div class="ecb-title">Check your inbox!</div>' +
+          '<div class="ecb-sub">Your Pronunciation Assessment Checklist is on its way to ' + email + '</div>' +
+          '<button class="ecb-btn" style="margin-top:16px;" onclick="dismissEmailBanner()">Got it</button>';
+      }
+    } else {
+      throw new Error('API error');
+    }
+  } catch(e) {
+    if (btn) { btn.textContent = 'Try Again'; btn.disabled = false; }
+    showToast('Something went wrong. Please try again.');
+  }
+}
 function renderWelcome() {
   const installBanner = (() => {
   const isInstalled = window.matchMedia('(display-mode: standalone)').matches;
@@ -1331,6 +1417,7 @@ function renderIPAChart() {
 
 // ── Phoneme list ──────────────────────────────────────────────────────────────
 function renderPhonemeList(catFilter) {
+  startEmailCaptureTimer();
   const list  = catFilter === 'all' ? PHONEMES : PHONEMES.filter(p => p.cat === catFilter);
   const cat   = CATS[catFilter];
   const title = catFilter === 'all' ? 'All 44 Phonemes' : (cat ? cat.label : catFilter);
