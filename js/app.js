@@ -1238,7 +1238,8 @@ function showEmailCaptureBanner() {
     '<div class="ecb-title">Get Your Free Pronunciation Assessment Checklist</div>' +
     '<div class="ecb-sub">Identify your key sound challenges in 5 minutes. Free — no strings attached.</div>' +
     '<div class="ecb-form">' +
-    '<input type="email" id="ecb-email-input" class="ecb-input" placeholder="Enter your email address" />' +
+    '<input type="text" id="ecb-name-input" class="ecb-input" placeholder="Your first name" />' +
+    '<input type="email" id="ecb-email-input" class="ecb-input" placeholder="Your email address" />' +
     '<button class="ecb-btn" onclick="submitEmailCapture()">Send Me the Checklist</button>' +
     '</div>' +
     '<div class="ecb-note">No spam. Unsubscribe anytime.</div>' +
@@ -1273,7 +1274,9 @@ async function submitEmailCapture() {
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
+      const nameInput = document.getElementById('ecb-name-input');
+      const firstName = nameInput ? nameInput.value.trim() : '';
+      body: JSON.stringify({ email: email, firstName: firstName })
     });
 
     if (res.status === 200 || res.status === 201 || res.status === 204) {
