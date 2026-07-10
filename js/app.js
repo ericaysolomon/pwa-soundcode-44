@@ -2012,6 +2012,8 @@ function buildSidebar() {
 
   if (isPremium) {
     html += `<div style="padding:8px 14px 2px"><span class="prem-badge">Premium ✓</span></div>`;
+  } else {
+    html += `<div style="padding:8px 14px 4px;font-size:11px;letter-spacing:.02em;color:#8a96a8;">7 of 44 sounds free</div>`;
   }
 
   let inSection = false;
@@ -2022,9 +2024,11 @@ function buildSidebar() {
       inSection = true;
     } else {
       const locked = isLocked(item.id);
+      const isFreeBadge = !isPremium && item.id === 'ms';
       html += `<div class="nav-item" data-id="${item.id}" onclick="navigate('${item.id}')">
         <span class="nav-icon">${item.icon}</span>
         <span>${item.label}${locked ? ' 🔒' : ''}</span>
+        ${isFreeBadge ? `<span style="display:inline-block;font-size:10px;padding:1px 6px;margin-left:6px;border-radius:8px;background:rgba(201,162,39,0.18);color:#9c7a1e;font-weight:600;">Free</span>` : ''}
         ${item.count ? `<span class="nav-count">${item.count}</span>` : ''}
       </div>`;
     }
