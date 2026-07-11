@@ -687,7 +687,6 @@ function playSound(fileBase) {
 let _ipaLongPressTimer = null;
 let _ipaTouchMoved = false;
 function ipaTouchStart(ipa, word, e) {
-  if (e && e.cancelable) e.preventDefault();
   _ipaTouchMoved = false;
   ipaLongPressCancel();
   _ipaLongPressTimer = setTimeout(() => {
@@ -695,7 +694,8 @@ function ipaTouchStart(ipa, word, e) {
     if (!_ipaTouchMoved) playWord(word);
   }, 400);
 }
-function ipaTouchEnd(ipa) {
+function ipaTouchEnd(ipa, e) {
+  if (e && e.cancelable && !_ipaTouchMoved) e.preventDefault();
   if (_ipaLongPressTimer) {
     clearTimeout(_ipaLongPressTimer);
     _ipaLongPressTimer = null;
@@ -934,7 +934,7 @@ function ipaCell(ipa, cls, label) {
     onmouseup="ipaLongPressCancel()"
     onmouseleave="ipaLongPressCancel()"
     ontouchstart="ipaTouchStart('${escQ(ipa)}','${escQ(kw0)}',event)"
-    ontouchend="ipaTouchEnd('${escQ(ipa)}')"
+    ontouchend="ipaTouchEnd('${escQ(ipa)}', event)"
     ontouchmove="ipaLongPressCancel()">
     ${labelHtml}
     <span class="ipa-cell-sym">${ipa}</span>
