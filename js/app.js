@@ -687,6 +687,7 @@ function playSound(fileBase) {
 let _ipaLongPressTimer = null;
 let _ipaTouchMoved = false;
 function ipaTouchStart(ipa, word, e) {
+  if (e && e.cancelable) e.preventDefault();
   _ipaTouchMoved = false;
   ipaLongPressCancel();
   _ipaLongPressTimer = setTimeout(() => {
