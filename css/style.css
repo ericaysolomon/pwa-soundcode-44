@@ -134,7 +134,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .ipa-subsection{padding:10px 14px;}
 .ipa-sublabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:#888;margin-bottom:8px;}
 .ipa-cell-row{display:flex;gap:6px;margin-bottom:6px;}
-.ipa-cell{width:56px;height:56px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:all .18s;border:2px solid transparent;user-select:none;}
+.ipa-cell{width:56px;height:56px;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transition:all .18s;border:2px solid transparent;user-select:none;-webkit-tap-highlight-color:transparent;}
 .ipa-cell:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.15);}
 .ipa-cell.empty{background:transparent;cursor:default;pointer-events:none;}
 .ipa-cell-sym{font-size:22px;font-weight:800;line-height:1;}
