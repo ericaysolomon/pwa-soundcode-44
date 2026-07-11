@@ -713,6 +713,24 @@ function ipaLongPressCancel() {
   if (_ipaLongPressTimer) { clearTimeout(_ipaLongPressTimer); _ipaLongPressTimer = null; }
 }
 
+function highlightIpaCell(ipa) {
+  document.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
+    el.style.background = '';
+    el.style.boxShadow = '';
+  });
+  const cell = document.querySelector(`.ipa-cell[data-ipa="${ipa}"]`);
+  if (cell) {
+    cell.style.background = 'rgba(201,162,39,0.28)';
+    cell.style.boxShadow = '0 0 0 2px #c9a227 inset';
+  }
+}
+function clearIpaHighlight() {
+  document.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
+    el.style.background = '';
+    el.style.boxShadow = '';
+  });
+}
+
 function speakPhoneme(ipa) {
   const path = AUDIO_MAP[ipa];
   if (!path) { showToast('No audio for ' + ipa); return; }
@@ -723,16 +741,20 @@ function speakPhoneme(ipa) {
     currentAudio.currentTime = 0;
   }
 
+  highlightIpaCell(ipa);
+
   // Use cached Audio object if available, create and cache on first use
   if (audioCache[ipa]) {
     currentAudio = audioCache[ipa];
     currentAudio.currentTime = 0;
-    currentAudio.play().catch(() => showToast('Audio not available'));
+    currentAudio.onended = clearIpaHighlight;
+    currentAudio.play().catch(() => { showToast('Audio not available'); clearIpaHighlight(); });
   } else {
     const audio = new Audio(path);
     audioCache[ipa] = audio;
     currentAudio = audio;
-    audio.play().catch(() => showToast('Audio not available'));
+    audio.onended = clearIpaHighlight;
+    audio.play().catch(() => { showToast('Audio not available'); clearIpaHighlight(); });
   }
   showToast(ipa);
 }
@@ -905,7 +927,7 @@ function ipaCell(ipa, cls, label) {
   const ph = PHONEMES.find(p => p.ipa === ipa);
   const kw0 = ph ? ph.keywords.split(' ')[0] : ipa;
   const labelHtml = label ? `<span style="font-size:9px;opacity:0.6;font-weight:700;display:block;margin-bottom:2px">${label}</span>` : '';
-  return `<div class="ipa-cell ${cls}" title="${ipa} — tap: sound · hold: sample word"
+  return `<div class="ipa-cell ${cls}" data-ipa="${escQ(ipa)}" title="${ipa} — tap: sound · hold: sample word"
     onclick="speakPhoneme('${escQ(ipa)}')"
     onmousedown="ipaLongPressStart('${escQ(kw0)}')"
     onmouseup="ipaLongPressCancel()"
