@@ -1271,11 +1271,11 @@ async function submitEmailCapture() {
   if (btn) { btn.textContent = 'Sending...'; btn.disabled = true; }
 
   try {
+    const nameInput = document.getElementById('ecb-name-input');
+    const firstName = nameInput ? nameInput.value.trim() : '';
     const res = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      const nameInput = document.getElementById('ecb-name-input');
-      const firstName = nameInput ? nameInput.value.trim() : '';
       body: JSON.stringify({ email: email, firstName: firstName })
     });
 
