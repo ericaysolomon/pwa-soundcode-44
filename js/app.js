@@ -714,19 +714,25 @@ function ipaLongPressCancel() {
   if (_ipaLongPressTimer) { clearTimeout(_ipaLongPressTimer); _ipaLongPressTimer = null; }
 }
 
+function _ipaHighlightScope() {
+  const overlay = document.getElementById('card-modal-overlay');
+  return overlay || document;
+}
 function highlightIpaCell(ipa) {
-  document.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
+  const scope = _ipaHighlightScope();
+  scope.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
     el.style.background = '';
     el.style.boxShadow = '';
   });
-  const cell = document.querySelector(`.ipa-cell[data-ipa="${ipa}"]`);
+  const cell = scope.querySelector(`.ipa-cell[data-ipa="${ipa}"]`);
   if (cell) {
     cell.style.background = 'rgba(201,162,39,0.28)';
     cell.style.boxShadow = '0 0 0 2px #c9a227 inset';
   }
 }
 function clearIpaHighlight() {
-  document.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
+  const scope = _ipaHighlightScope();
+  scope.querySelectorAll('.ipa-cell[data-ipa]').forEach(el => {
     el.style.background = '';
     el.style.boxShadow = '';
   });
