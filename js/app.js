@@ -455,6 +455,22 @@ let currentAudio = null;
 const audioCache = {};
 let searchQuery = '';
 let gameCategory = 'all';
+let practisedSet = new Set(JSON.parse(localStorage.getItem('sc44_practised') || '[]'));
+function savePractised() { localStorage.setItem('sc44_practised', JSON.stringify([...practisedSet])); }
+function togglePractised(id) {
+  if (!isPremium) return;
+  if (practisedSet.has(id)) practisedSet.delete(id); else practisedSet.add(id);
+  savePractised();
+  const btn = document.getElementById('practised-btn-' + id);
+  if (btn) btn.textContent = practisedSet.has(id) ? '✅ Practised' : '☐ Mark as Practised';
+  const card = document.getElementById('card-' + id);
+  if (card) card.classList.toggle('practised', practisedSet.has(id));
+  buildSidebar();
+}
+function practisedCountFor(navId) {
+  if (navId === 'all') return PHONEMES.filter(p => practisedSet.has(p.id)).length;
+  return PHONEMES.filter(p => p.cat === navId && practisedSet.has(p.id)).length;
+}
 let deferredInstallPrompt = null;
 
 // ── Premium / licence key control ─────────────────────────────────────────────
