@@ -980,6 +980,7 @@ function buildCard(ph) {
     <div class="ph-head-buttons">
       <button class="listen-btn" onclick="speakKeywords('${escQ(kw1)}','${escQ(kw2)}','${escQ(kw3)}')">🔊 Sample Words</button>
       <button class="fullscreen-btn" onclick="showCardFullscreen('${ph.id}')">&#x26F6; Full View</button>
+      ${isPremium ? `<button class="practised-btn" id="practised-btn-${ph.id}" onclick="togglePractised('${escQ(ph.id)}')">${practisedSet.has(ph.id) ? '✅ Practised' : '☐ Mark as Practised'}</button>` : ''}
     </div>
   </div>
   <div class="ph-how">
@@ -2058,7 +2059,7 @@ function buildSidebar() {
         <span class="nav-icon">${item.icon}</span>
         <span>${item.label}${locked ? ' 🔒' : ''}</span>
         ${isFreeBadge ? `<span style="display:inline-block;font-size:10px;padding:1px 6px;margin-left:6px;border-radius:8px;background:rgba(201,162,39,0.18);color:#9c7a1e;font-weight:600;">Free</span>` : ''}
-        ${item.count ? `<span class="nav-count">${item.count}</span>` : ''}
+        ${item.count ? `<span class="nav-count">${isPremium ? (practisedCountFor(item.id) + '/' + item.count) : item.count}</span>` : ''}
       </div>`;
     }
   });
