@@ -67,6 +67,18 @@ module.exports = async function handler(req, res) {
         if (purchase.refunded || purchase.chargebacked || purchase.disputed) {
           return res.status(200).json({ valid: false, error: 'This licence key is no longer active.' });
         }
+        // Membership lapse check. Gumroad sets these to the membership END date,
+        // not the cancellation request time, and resets them to null on renewal.
+        // Only revoke once the end date has actually passed.
+        const subEnd = purchase.subscription_cancelled_at
+                    || purchase.subscription_failed_at
+                    || purchase.subscription_ended_at;
+        if (subEnd) {
+          const endMs = new Date(subEnd).getTime();
+          if (!isNaN(endMs) && endMs <= Date.now()) {
+            return res.status(200).json({ valid: false, error: 'This subscription is no longer active. Please renew to continue.' });
+          }
+        }
         return res.status(200).json({ valid: true, type: keyType });
       }
     }
