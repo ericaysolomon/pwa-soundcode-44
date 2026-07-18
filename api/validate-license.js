@@ -45,7 +45,6 @@ module.exports = async function handler(req, res) {
         },
       });
       const rows = await sbRes.json();
-      console.log('SB status:', sbRes.status, 'rows:', JSON.stringify(rows).slice(0, 300));
 
       if (Array.isArray(rows) && rows.length === 1) {
         const lic = rows[0];
