@@ -32,7 +32,7 @@ module.exports = async function handler(req, res) {
   };
 
   // ── Supabase-issued keys (Selfany pool + review keys) ──────────────────────
-  const SB_URL = process.env.SUPABASE_URL;
+  const SB_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
   const SB_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (SB_URL && SB_KEY) {
