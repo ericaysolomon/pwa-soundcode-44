@@ -45,6 +45,7 @@ module.exports = async function handler(req, res) {
         },
       });
       const rows = await sbRes.json();
+      console.log('SB status:', sbRes.status, 'rows:', JSON.stringify(rows).slice(0, 300));
 
       if (Array.isArray(rows) && rows.length === 1) {
         const lic = rows[0];
@@ -76,7 +77,7 @@ module.exports = async function handler(req, res) {
           });
         }
 
-        return res.status(200).json({ valid: true, type: lic.product_type });
+        return res.status(200).json({ valid: true, type: lic.product_type, instanceId: lic.id });
       }
     } catch (err) {
       console.error('Supabase lookup error:', err);
