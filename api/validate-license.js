@@ -31,6 +31,59 @@ module.exports = async function handler(req, res) {
     'REVIEW-TEACH62': 1785890474993,
   };
 
+  // ── Supabase-issued keys (Selfany pool + review keys) ──────────────────────
+  const SB_URL = process.env.SUPABASE_URL;
+  const SB_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (SB_URL && SB_KEY) {
+    try {
+      const q = `${SB_URL}/rest/v1/licenses?key=eq.${encodeURIComponent(trimmedKey)}&select=*`;
+      const sbRes = await fetch(q, {
+        headers: {
+          apikey: SB_KEY,
+          Authorization: `Bearer ${SB_KEY}`,
+        },
+      });
+      const rows = await sbRes.json();
+
+      if (Array.isArray(rows) && rows.length === 1) {
+        const lic = rows[0];
+
+        if (lic.status === 'revoked') {
+          return res.status(200).json({ valid: false, error: 'This licence key is no longer active.' });
+        }
+
+        // Already-expired keys
+        if (lic.expires_at && new Date(lic.expires_at).getTime() <= Date.now()) {
+          return res.status(200).json({ valid: false, error: 'This licence key has expired.' });
+        }
+
+        // First use: stamp activation and compute expiry from validity_days
+        if (lic.status === 'available') {
+          const patch = { status: 'active', activated_at: new Date().toISOString() };
+          if (lic.validity_days) {
+            patch.expires_at = new Date(Date.now() + lic.validity_days * 86400000).toISOString();
+          }
+          await fetch(`${SB_URL}/rest/v1/licenses?id=eq.${lic.id}`, {
+            method: 'PATCH',
+            headers: {
+              apikey: SB_KEY,
+              Authorization: `Bearer ${SB_KEY}`,
+              'Content-Type': 'application/json',
+              Prefer: 'return=minimal',
+            },
+            body: JSON.stringify(patch),
+          });
+        }
+
+        return res.status(200).json({ valid: true, type: lic.product_type });
+      }
+    } catch (err) {
+      console.error('Supabase lookup error:', err);
+      // fall through to legacy paths below
+    }
+  }
+
   if (trimmedKey.startsWith('REVIEW-')) {
     const expiry = REVIEW_KEYS[trimmedKey];
     if (!expiry) {
