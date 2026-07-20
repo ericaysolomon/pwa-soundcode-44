@@ -538,7 +538,7 @@ function showAfricanPlanPicker() {
       <div style="font-size:20px;font-weight:700;color:#0D2B55;margin-bottom:6px;">Choose Your Plan</div>
       <div style="font-size:13px;color:#888;margin-bottom:24px;">Africa pricing — secure checkout via Selfany</div>
       <div style="display:flex;gap:14px;margin-bottom:20px;">
-        <div style="flex:1;border:2px solid #1A7A6E;border-radius:12px;padding:18px 12px;cursor:pointer;" onclick="window.open('https://selfany.com/SoundCode44','_blank');document.getElementById('plan-picker-overlay').remove();">
+        <div style="flex:1;border:2px solid #1A7A6E;border-radius:12px;padding:18px 12px;cursor:pointer;" onclick="window.open('https://selfany.com/SoundCode44annual','_blank');document.getElementById('plan-picker-overlay').remove();">
           <div style="font-size:12px;font-weight:700;color:#1A7A6E;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Annual</div>
           <div style="font-size:28px;font-weight:700;color:#0D2B55;margin-bottom:4px;">$19.99</div>
           <div style="font-size:12px;color:#888;margin-bottom:14px;">per year</div>
