@@ -20,16 +20,6 @@ module.exports = async function handler(req, res) {
 
   // Review keys — time-limited, online-only
   // To add a key: add entry, push to Vercel.
-  // To revoke early: remove entry, push to Vercel.
-  // Expiry value = Date.now() + (48 * 60 * 60 * 1000) for 48 hours
-  // Example: 'REVIEW-STAFF01': 1750000000000
-  const REVIEW_KEYS = {
-    // ADD REVIEW KEYS HERE:
-    // 'REVIEW-STAFF01': 1750000000000,
-    // 'REVIEW-TEACH01': 1750000000000,
-    'REVIEW-STAFF01': 1782432717967,
-    'REVIEW-TEACH62': 1785890474993,
-  };
 
   // ── Supabase-issued keys (Selfany pool + review keys) ──────────────────────
   const SB_URL = (process.env.SUPABASE_URL || '').replace(/\/+$/, '');
@@ -82,17 +72,6 @@ module.exports = async function handler(req, res) {
       console.error('Supabase lookup error:', err);
       // fall through to legacy paths below
     }
-  }
-
-  if (trimmedKey.startsWith('REVIEW-')) {
-    const expiry = REVIEW_KEYS[trimmedKey];
-    if (!expiry) {
-      return res.status(200).json({ valid: false, error: 'Invalid review key.' });
-    }
-    if (Date.now() > expiry) {
-      return res.status(200).json({ valid: false, error: 'This review key has expired.' });
-    }
-    return res.status(200).json({ valid: true, type: 'review' });
   }
 
   // Gumroad keys — verified against API
