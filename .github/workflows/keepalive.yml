@@ -1,0 +1,19 @@
+﻿name: keep-supabase-awake
+on:
+  schedule:
+    - cron: "0 6 */3 * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: |
+          echo "Pinging keep-alive endpoint..."
+          code=$(curl -s -o /tmp/resp.json -w "%{http_code}" https://soundcode44.thriveenglish.co/api/health)
+          echo "HTTP $code"
+          cat /tmp/resp.json
+          if [ "$code" != "200" ]; then
+            echo "::error::Keep-alive failed with HTTP $code — Supabase may be paused or the endpoint is broken."
+            exit 1
+          fi
