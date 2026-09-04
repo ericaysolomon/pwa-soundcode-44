@@ -456,6 +456,7 @@ const audioCache = {};
 let searchQuery = '';
 let gameCategory = 'all';
 let _activeGame = null;  // name of game in play, or null
+let _isPoppingBack = false;  // true while goBack() runs, so navigate() skips history push
 let practisedSet = new Set(JSON.parse(localStorage.getItem('sc44_practised') || '[]'));
 function savePractised() { localStorage.setItem('sc44_practised', JSON.stringify([...practisedSet])); }
 function togglePractised(id) {
@@ -2009,11 +2010,21 @@ function renderSearch(q) {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+function _doGoBack() {
+  // The actual hierarchy step. Called by popstate; sets _isPoppingBack so
+  // navigate() doesn't push a new history entry while we're going backward.
+  _isPoppingBack = true;
+  if (_activeGame) { _activeGame = null; navigate('games'); }
+  else if (currentSection && currentSection !== 'welcome') { navigate('welcome'); }
+  _isPoppingBack = false;
+}
 function goBack() {
-  // Hierarchy: game -> Games Hub -> Welcome -> (stop)
-  if (_activeGame) { _activeGame = null; navigate('games'); return; }
-  if (currentSection && currentSection !== 'welcome') { navigate('welcome'); return; }
-  // already at top level: nothing above
+  // Back BUTTON: trigger a history.back() so the browser history stays in sync
+  // with the visual state. popstate then runs _doGoBack().
+  // If there's a nav entry to pop, use it; otherwise step directly.
+  if (_activeGame || (currentSection && currentSection !== 'welcome')) {
+    history.back();
+  }
 }
 function backButtonHTML(label) {
   return `<button class="sc-back-btn" onclick="goBack()">\u2190 ${label}</button>`;
@@ -2039,6 +2050,10 @@ function navigate(id) {
   document.getElementById('search-box').value = '';
   updateSidebar();
   renderContent();
+  // Push a nav entry on forward navigation only (not when going back)
+  if (!_isPoppingBack && id !== 'welcome') {
+    history.pushState({ scNav: true }, '');
+  }
 }
 
 function updateSidebar() {
@@ -2143,13 +2158,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // Handle browser back button/gesture to close modal
   window.addEventListener('popstate', function(e) {
-    _modalHistoryPushed = false;
+    // Priority 1: if any modal/overlay is open, back closes it (existing behavior).
     const o = document.getElementById('card-modal-overlay');
-    if (o) { o.remove(); document.body.style.overflow = ''; }
     const p = document.getElementById('plan-picker-overlay');
-    if (p) p.remove();
     const prem = document.getElementById('premium-overlay');
-    if (prem) prem.classList.remove('open');
+    const premOpen = prem && prem.classList.contains('open');
+    if (o || p || premOpen) {
+      _modalHistoryPushed = false;
+      if (o) { o.remove(); document.body.style.overflow = ''; }
+      if (p) p.remove();
+      if (premOpen) prem.classList.remove('open');
+      return;
+    }
+    // Priority 2: no modal open -> step back up the section/game hierarchy.
+    _doGoBack();
   });
   document.getElementById('search-box').addEventListener('input', e => {
     searchQuery = e.target.value.trim();
