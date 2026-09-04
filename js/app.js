@@ -1621,7 +1621,7 @@ const DEC_QS = [
   {ipa:'/meʒə/',  opts:['measure','major','leisure','treasure'],a:'measure',  cat:'fr'},
   {ipa:'/bæŋk/',  opts:['bank','bang','rank','bunk'],           a:'bank',     cat:'na'},
   {ipa:'/naɪt/',  opts:['night','knit','note','neat'],          a:'night',    cat:'di'},
-  {ipa:'/wɪtʃ/',  opts:['witch','watch','wish','which'],        a:'witch',    cat:'af'},
+  {ipa:'/wɪtʃ/',  opts:['which','watch','wish','wits'],         a:'which',    cat:'af'},
   {ipa:'/strɒŋ/', opts:['strong','string','strung','strap'],    a:'strong',   cat:'na'},
   {ipa:'/dʒentl/',opts:['gentle','jingle','jungle','dental'],   a:'gentle',   cat:'af'},
   {ipa:'/pleʒə/', opts:['pleasure','measure','plaza','player'], a:'pleasure', cat:'fr'},
