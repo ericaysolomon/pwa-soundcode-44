@@ -455,6 +455,7 @@ let currentAudio = null;
 const audioCache = {};
 let searchQuery = '';
 let gameCategory = 'all';
+let _activeGame = null;  // name of game in play, or null
 let practisedSet = new Set(JSON.parse(localStorage.getItem('sc44_practised') || '[]'));
 function savePractised() { localStorage.setItem('sc44_practised', JSON.stringify([...practisedSet])); }
 function togglePractised(id) {
@@ -1544,7 +1545,7 @@ function renderQuiz() {
   const filtered = QZ.filter(q => matchesCat(q.cat));
   const pool = filtered.length >= 3 ? filtered : QZ;
   qzState = {idx:0, score:0, answered:false, results:[], pool};
-  setTitle('Quiz');
+  _activeGame = 'Quiz'; setTitle('Quiz');
   renderQuizQ();
 }
 
@@ -1633,7 +1634,7 @@ function startDecode() {
   const filtered = DEC_QS.filter(q => matchesCat(q.cat));
   const pool = filtered.length >= 2 ? filtered : DEC_QS;
   decState = {idx:0, score:0, answered:false, results:[], pool};
-  setTitle('Decode It');
+  _activeGame = 'Decode It'; setTitle('Decode It');
   renderDecodeQ();
 }
 
@@ -1709,7 +1710,7 @@ function startBuild() {
   const filtered = BLD_QS.filter(q => matchesCat(q.cat));
   const questions = filtered.length >= 2 ? filtered : BLD_QS;
   bldState = {idx:0, score:0, placed:[], pool:[], results:[], questions};
-  setTitle('Build a Word');
+  _activeGame = 'Build a Word'; setTitle('Build a Word');
   renderBuildQ();
 }
 
@@ -1798,7 +1799,7 @@ function startSpeed() {
   const count = Math.min(10, qs.length);
   const shuffled = [...qs].sort(() => Math.random() - 0.5).slice(0, count);
   spdState = {qs:shuffled, idx:0, score:0, total:count, start:Date.now(), answered:false};
-  setTitle('Speed Round');
+  _activeGame = 'Speed Round'; setTitle('Speed Round');
   renderSpeedQ();
 }
 
@@ -2005,8 +2006,31 @@ function renderSearch(q) {
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
+function goBack() {
+  // Hierarchy: game -> Games Hub -> Welcome -> (stop)
+  if (_activeGame) { _activeGame = null; navigate('games'); return; }
+  if (currentSection && currentSection !== 'welcome') { navigate('welcome'); return; }
+  // already at top level: nothing above
+}
+function backButtonHTML(label) {
+  return `<button class="sc-back-btn" onclick="goBack()">\u2190 ${label}</button>`;
+}
+function stampBackButton() {
+  const el = document.getElementById('content');
+  if (!el) return;
+  if (el.querySelector('.sc-back-btn')) return;  // don't double-stamp
+  let label = null;
+  if (_activeGame) label = 'Games Hub';
+  else if (currentSection && currentSection !== 'welcome' && !searchQuery) label = 'Menu';
+  if (!label) return;
+  const btn = document.createElement('div');
+  btn.innerHTML = backButtonHTML(label);
+  el.insertBefore(btn.firstChild, el.firstChild);
+}
+
 function navigate(id) {
   if (isLocked(id)) { showPremiumOverlay(); return; }
+  if (id !== 'games') _activeGame = null;
   currentSection = id;
   searchQuery = '';
   document.getElementById('search-box').value = '';
@@ -2036,6 +2060,7 @@ function renderContent() {
     case 'reference':   el.innerHTML = renderReference();    break;
     default:            el.innerHTML = renderPhonemeList(currentSection); break;
   }
+  stampBackButton();
 }
 
 // ── Sidebar toggle ────────────────────────────────────────────────────────────
