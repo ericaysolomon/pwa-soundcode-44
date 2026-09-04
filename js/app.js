@@ -1670,7 +1670,7 @@ function renderDecodeQ() {
     <div class="game-ipa-display">${q.ipa}</div>
     <div class="game-options">${opts}</div>
     <div id="dec-feedback"></div>
-  </div></div>`;
+  </div></div>`;  stampBackButton();
 }
 
 function checkDecode(ans) {
@@ -1754,7 +1754,7 @@ function renderBuildQ() {
       <button class="btn-secondary" onclick="buildClear()">Clear</button>
     </div>
     <div id="build-feedback" style="margin-top:8px"></div>
-  </div></div>`;
+  </div></div>`;  stampBackButton();
 }
 
 function buildPlace(t) {
@@ -1835,7 +1835,7 @@ function renderSpeedQ() {
     </div>
     <div class="game-options">${opts}</div>
     <div id="spd-feedback"></div>
-  </div></div>`;
+  </div></div>`;  stampBackButton();
 }
 
 function checkSpeed(ans) {
