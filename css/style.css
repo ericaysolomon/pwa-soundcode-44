@@ -1040,3 +1040,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   font-size: 11px;
   color: #bbb;
 }
+
+/* ── Back navigation button ── */
+.sc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px 7px 11px;
+  margin-bottom: 14px;
+  background: #f0f2f5;
+  color: #1a1a2e;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .15s, transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.sc-back-btn:hover { background: #e2e6ec; }
+.sc-back-btn:active { transform: scale(0.97); }
