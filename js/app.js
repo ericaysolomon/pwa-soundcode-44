@@ -1548,6 +1548,15 @@ function renderQuiz() {
   renderQuizQ();
 }
 
+function shuffledOpts(q) {
+  // Shuffle once per question and cache, so order is stable while answering
+  // but the correct answer lands in a random position across questions.
+  if (!q._shuffled) {
+    q._shuffled = [...q.opts].sort(() => Math.random() - 0.5);
+  }
+  return q._shuffled;
+}
+
 function renderQuizQ() {
   const c = document.getElementById('content');
   const pool = qzState.pool;
@@ -1569,7 +1578,7 @@ function renderQuizQ() {
   const prog = pool.map((_,i) =>
     `<div class="prog-dot ${i<qzState.idx?(qzState.results[i]?'done-ok':'done-bad'):(i===qzState.idx?'current':'')}"></div>`
   ).join('');
-  const opts = q.opts.map(o =>
+  const opts = shuffledOpts(q).map(o =>
     `<button class="game-option" id="qopt-${escQ(o)}" onclick="checkQuiz('${escQ(o)}')">${o}</button>`
   ).join('');
   c.innerHTML = `<div class="game-wrap"><div class="game-card">
@@ -1649,7 +1658,7 @@ function renderDecodeQ() {
   const prog = pool.map((_,i) =>
     `<div class="prog-dot ${i<decState.idx?(decState.results[i]?'done-ok':'done-bad'):(i===decState.idx?'current':'')}"></div>`
   ).join('');
-  const opts = q.opts.map(o =>
+  const opts = shuffledOpts(q).map(o =>
     `<button class="game-option" id="dopt-${escQ(o)}" onclick="checkDecode('${escQ(o)}')">${o}</button>`
   ).join('');
   c.innerHTML = `<div class="game-wrap"><div class="game-card">
