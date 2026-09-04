@@ -1590,6 +1590,7 @@ function renderQuizQ() {
     <div class="game-options">${opts}</div>
     <div id="quiz-feedback"></div>
   </div></div>`;
+  stampBackButton();
 }
 
 function checkQuiz(ans) {
@@ -1872,6 +1873,7 @@ let mpState = {idx:0};
 
 function renderMP() {
   mpState = {idx:0};
+  _activeGame = 'Minimal Pairs';
   setTitle('Minimal Pairs');
   renderMPPair();
 }
@@ -1905,6 +1907,7 @@ function renderMPPair() {
     ${navHtml}
   </div>
 </div>`;
+  stampBackButton();
 }
 
 // ── How to Use ────────────────────────────────────────────────────────────────
