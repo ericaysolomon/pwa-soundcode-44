@@ -1046,10 +1046,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px 7px 11px;
-  margin-bottom: 14px;
-  background: #f0f2f5;
-  color: #1a1a2e;
+  padding: 8px 16px 8px 12px;
+  margin-bottom: 18px;
+  background: #1a1a2e;
+  color: #fff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -1058,5 +1058,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   transition: background .15s, transform .15s;
   -webkit-tap-highlight-color: transparent;
 }
-.sc-back-btn:hover { background: #e2e6ec; }
+.sc-back-btn:hover { background: #2c2c4a; }
 .sc-back-btn:active { transform: scale(0.97); }
+@media(max-width:640px){
+  .sc-back-btn { margin-bottom: 26px; }
+}
