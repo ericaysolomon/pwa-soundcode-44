@@ -1063,3 +1063,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 @media(max-width:640px){
   .sc-back-btn { margin-bottom: 26px; }
 }
+
+/* ── Collapsed mobile rail: icon + short label ── */
+.nav-short { display: none; }
+
+@media (max-width: 640px) {
+  #sidebar:not(.open) { width: 60px; min-width: 60px; }
+  #main { margin-left: 60px; }
+
+  /* stack icon over short label, centered, in each nav item */
+  #sidebar:not(.open) .nav-item {
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 2px;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+  }
+  #sidebar:not(.open) .nav-icon { font-size: 17px; min-width: 0; }
+  #sidebar:not(.open) .nav-short {
+    display: block;
+    font-size: 8.5px;
+    line-height: 1.1;
+    font-weight: 600;
+    color: #c8c8dd;
+    max-width: 56px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  /* active section: clear highlight in the narrow rail */
+  #sidebar:not(.open) .nav-item.active {
+    background: rgba(124,111,224,.22);
+    border-left-color: #7c6fe0;
+  }
+  #sidebar:not(.open) .nav-item.active .nav-short { color: #fff; }
+
+  /* section dividers: thin separators, not blank text rows */
+  #sidebar:not(.open) .sidebar-section { padding: 3px 0; }
+  #sidebar:not(.open) .sidebar-section-title {
+    display: block; height: 1px; padding: 0; margin: 4px 8px;
+    background: rgba(255,255,255,.10); overflow: hidden; text-indent: -9999px;
+  }
+  /* hide free-tier banner + premium badge in the narrow rail (meaningless there) */
+  #sidebar:not(.open) .prem-badge,
+  #sidebar:not(.open) #sidebar-nav > div:first-child { font-size: 0; padding: 0; }
+}
+

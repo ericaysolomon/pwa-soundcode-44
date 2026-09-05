@@ -378,27 +378,27 @@ const CATS = {
 // ── Navigation sections ──────────────────────────────────────────────────────
 const NAV = [
   { type:'divider',   label:'GETTING STARTED' },
-  { id:'welcome',     icon:'🏠', label:'Welcome',                count:null },
-  { id:'howto',       icon:'📖', label:'How to Use',             count:null },
-  { id:'foundations', icon:'🧱', label:'Sound Foundations',      count:null },
+  { id:'welcome',     icon:'🏠', label:'Welcome',                short:'Home',    count:null },
+  { id:'howto',       icon:'📖', label:'How to Use',             short:'Guide',   count:null },
+  { id:'foundations', icon:'🧱', label:'Sound Foundations',      short:'Basics',  count:null },
   { type:'divider',   label:'VOWEL SOUNDS (20)' },
-  { id:'ms',          icon:'🔶', label:'Short Monophthongs',     count:7    },
-  { id:'ml',          icon:'🔷', label:'Long Monophthongs',      count:5    },
-  { id:'di',          icon:'🔁', label:'Diphthongs',             count:8    },
+  { id:'ms',          icon:'🔶', label:'Short Monophthongs',     short:'Short V', count:7    },
+  { id:'ml',          icon:'🔷', label:'Long Monophthongs',      short:'Long V',  count:5    },
+  { id:'di',          icon:'🔁', label:'Diphthongs',             short:'Diph',    count:8    },
   { type:'divider',   label:'CONSONANT SOUNDS (24)' },
-  { id:'pl',          icon:'💥', label:'Plosives',               count:6    },
-  { id:'fr',          icon:'🌬️', label:'Fricatives',             count:9    },
-  { id:'af',          icon:'⚡', label:'Affricates',             count:2    },
-  { id:'na',          icon:'👃', label:'Nasals',                 count:3    },
-  { id:'ap',          icon:'〰️', label:'Approximants & Lateral', count:4    },
+  { id:'pl',          icon:'💥', label:'Plosives',               short:'Plosive', count:6    },
+  { id:'fr',          icon:'🌬️', label:'Fricatives',             short:'Fric',    count:9    },
+  { id:'af',          icon:'⚡', label:'Affricates',             short:'Affric',  count:2    },
+  { id:'na',          icon:'👃', label:'Nasals',                 short:'Nasal',   count:3    },
+  { id:'ap',          icon:'〰️', label:'Approximants & Lateral', short:'Approx',  count:4    },
   { type:'divider',   label:'REFERENCE' },
-  { id:'ipa-chart',   icon:'📊', label:'IPA Chart',              count:null },
-  { id:'all',         icon:'🔤', label:'All 44 Phonemes',        count:44   },
-  { id:'reference',   icon:'📋', label:'Reference Table',        count:null },
+  { id:'ipa-chart',   icon:'📊', label:'IPA Chart',              short:'IPA',     count:null },
+  { id:'all',         icon:'🔤', label:'All 44 Phonemes',        short:'All 44',  count:44   },
+  { id:'reference',   icon:'📋', label:'Reference Table',        short:'Table',   count:null },
   { type:'divider',   label:'PRACTICE' },
-  { id:'games',       icon:'🎮', label:'Games Hub',              count:null },
-  { id:'mp',          icon:'👂', label:'Minimal Pairs',          count:null },
-  { id:'quiz',        icon:'🧠', label:'Quiz',                   count:null },
+  { id:'games',       icon:'🎮', label:'Games Hub',              short:'Games',   count:null },
+  { id:'mp',          icon:'👂', label:'Minimal Pairs',          short:'Pairs',   count:null },
+  { id:'quiz',        icon:'🧠', label:'Quiz',                   short:'Quiz',    count:null },
 ];
 
 // ── Audio map: IPA bare symbol → MP3 file path ───────────────────────────────
@@ -2137,6 +2137,7 @@ function buildSidebar() {
       const isFreeBadge = !isPremium && item.id === 'ms';
       html += `<div class="nav-item" data-id="${item.id}" onclick="navigate('${item.id}')">
         <span class="nav-icon">${item.icon}</span>
+        <span class="nav-short">${item.short || ''}</span>
         <span>${item.label}${locked ? ' 🔒' : ''}</span>
         ${isFreeBadge ? `<span style="display:inline-block;font-size:10px;padding:1px 6px;margin-left:6px;border-radius:8px;background:rgba(201,162,39,0.18);color:#9c7a1e;font-weight:600;">Free</span>` : ''}
         ${item.count ? `<span class="nav-count">${isPremium ? (practisedCountFor(item.id) + '/' + item.count) : item.count}</span>` : ''}
