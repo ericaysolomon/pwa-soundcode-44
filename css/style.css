@@ -1104,8 +1104,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
     display: block; height: 1px; padding: 0; margin: 4px 8px;
     background: rgba(255,255,255,.10); overflow: hidden; text-indent: -9999px;
   }
-  /* hide free-tier banner + premium badge in the narrow rail (meaningless there) */
-  #sidebar:not(.open) .prem-badge,
-  #sidebar:not(.open) #sidebar-nav > div:first-child { font-size: 0; padding: 0; }
+  /* hide the premium badge in the narrow rail; keep icons intact */
+  #sidebar:not(.open) .prem-badge { display: none; }
+  /* shrink the free-tier banner text so it doesn't dominate the rail */
+  #sidebar:not(.open) #sidebar-nav > div:first-child:not(.nav-item):not(.sidebar-section) {
+    font-size: 7px; line-height: 1.1; padding: 4px 3px; text-align: center; color: #8a96a8;
+  }
+  /* make sure nav icons always render visibly in the rail */
+  #sidebar:not(.open) .nav-item .nav-icon { font-size: 18px !important; min-width: 0; display: block; }
 }
 
