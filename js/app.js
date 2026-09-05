@@ -1638,6 +1638,7 @@ function startDecode() {
   decState = {idx:0, score:0, answered:false, results:[], pool};
   _activeGame = 'Decode It'; setTitle('Decode It');
   renderDecodeQ();
+  if (!_isPoppingBack) history.pushState({ scNav: true }, '');
 }
 
 function renderDecodeQ() {
@@ -1714,6 +1715,7 @@ function startBuild() {
   bldState = {idx:0, score:0, placed:[], pool:[], results:[], questions};
   _activeGame = 'Build a Word'; setTitle('Build a Word');
   renderBuildQ();
+  if (!_isPoppingBack) history.pushState({ scNav: true }, '');
 }
 
 function renderBuildQ() {
@@ -1803,6 +1805,7 @@ function startSpeed() {
   spdState = {qs:shuffled, idx:0, score:0, total:count, start:Date.now(), answered:false};
   _activeGame = 'Speed Round'; setTitle('Speed Round');
   renderSpeedQ();
+  if (!_isPoppingBack) history.pushState({ scNav: true }, '');
 }
 
 function renderSpeedQ() {
