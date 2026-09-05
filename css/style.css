@@ -5,7 +5,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 #sidebar{width:260px;min-width:260px;background:#1a1a2e;color:#e8e8f0;overflow-y:auto;display:flex;flex-direction:column;transition:width .25s;}
 #sidebar.collapsed{width:52px;min-width:52px;}
 #sidebar-header{padding:14px 12px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer;user-select:none;}
-#sidebar-header h1{font-size:13px;font-weight:700;letter-spacing:.5px;white-space:nowrap;overflow:hidden;}
+#sidebar-header h1{font-size:18px;font-weight:800;letter-spacing:.3px;white-space:nowrap;}
 .sidebar.collapsed #sidebar-header h1{display:none;}
 .sidebar-section{padding:6px 0;}
 .sidebar-section-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8888aa;padding:8px 14px 4px;white-space:nowrap;overflow:hidden;}
