@@ -319,7 +319,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 /* ── Responsive ── */
 @media(max-width:640px){
   #sidebar{width:52px;min-width:52px;position:fixed;top:0;left:0;height:100%;z-index:1000;}
-  #sidebar.open{width:260px;min-width:260px;}
+  #sidebar.open{width:220px;min-width:220px;}
   #sidebar.open .nav-item span,#sidebar.open .sidebar-section-title,#sidebar.open .nav-count{display:inline;}
   #sidebar-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999;}
   #sidebar-overlay.show{display:block;}
@@ -1121,3 +1121,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   #sidebar:not(.open) .nav-item .nav-icon { font-size: 18px !important; min-width: 0; display: block; }
 }
 
+@media (max-width: 640px) {
+  /* open mobile panel: let long section names wrap to 2 lines */
+  #sidebar.open .nav-item { white-space: normal; align-items: center; }
+  #sidebar.open .nav-item span:not(.nav-icon):not(.nav-short):not(.nav-count) {
+    line-height: 1.15;
+  }
+}
