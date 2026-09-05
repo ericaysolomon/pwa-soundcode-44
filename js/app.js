@@ -2053,6 +2053,7 @@ function navigate(id) {
   document.getElementById('search-box').value = '';
   updateSidebar();
   renderContent();
+  closeSidebarOnMobile();
   // Push a nav entry on forward navigation only (not when going back)
   if (!_isPoppingBack && id !== 'welcome') {
     history.pushState({ scNav: true }, '');
@@ -2085,6 +2086,14 @@ function renderContent() {
 }
 
 // ── Sidebar toggle ────────────────────────────────────────────────────────────
+function closeSidebarOnMobile() {
+  if (window.innerWidth > 640) return;  // desktop sidebar stays put
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar) sidebar.classList.remove('open');
+  const overlay = document.getElementById('sidebar-overlay');
+  if (overlay) overlay.classList.remove('show');
+}
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const isMobile = window.innerWidth <= 640;
