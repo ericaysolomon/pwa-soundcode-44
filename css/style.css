@@ -11,7 +11,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .sidebar-section-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8888aa;padding:8px 14px 4px;white-space:nowrap;overflow:hidden;}
 .nav-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;transition:background .15s;font-size:12.5px;white-space:nowrap;overflow:hidden;border-left:3px solid transparent;}
 .nav-item:hover{background:rgba(255,255,255,.08);}
-.nav-item.active{background:rgba(255,255,255,.12);border-left-color:#7c6fe0;}
+.nav-item.active{background:rgba(124,111,224,.28);border-left-color:#9d90ff;border-left-width:4px;font-weight:700;color:#fff;}
 .nav-icon{font-size:14px;min-width:20px;text-align:center;}
 .nav-count{margin-left:auto;font-size:10px;background:rgba(255,255,255,.15);padding:1px 6px;border-radius:8px;}
 
@@ -1093,9 +1093,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   }
   /* active section: clear highlight in the narrow rail */
   #sidebar:not(.open) .nav-item.active {
-    background: rgba(124,111,224,.22);
-    border-left-color: #7c6fe0;
+    background: rgba(124,111,224,.32);
+    border-left-color: #9d90ff;
   }
+  #sidebar:not(.open) .nav-item.active .nav-short { font-weight: 700; }
   #sidebar:not(.open) .nav-item.active .nav-short { color: #fff; }
 
   /* rail: collapse all section spacing so every item fits at a glance */
