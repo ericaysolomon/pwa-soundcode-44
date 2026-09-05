@@ -1074,8 +1074,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   /* stack icon over short label, centered, in each nav item */
   #sidebar:not(.open) .nav-item {
     flex-direction: column;
-    gap: 2px;
-    padding: 8px 2px;
+    gap: 1px;
+    padding: 4px 2px;
     justify-content: center;
     text-align: center;
     white-space: normal;
@@ -1098,12 +1098,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
   }
   #sidebar:not(.open) .nav-item.active .nav-short { color: #fff; }
 
-  /* section dividers: thin separators, not blank text rows */
-  #sidebar:not(.open) .sidebar-section { padding: 3px 0; }
-  #sidebar:not(.open) .sidebar-section-title {
-    display: block; height: 1px; padding: 0; margin: 4px 8px;
-    background: rgba(255,255,255,.10); overflow: hidden; text-indent: -9999px;
-  }
+  /* rail: collapse all section spacing so every item fits at a glance */
+  #sidebar:not(.open) .sidebar-section { padding: 0; }
+  #sidebar:not(.open) .sidebar-section-title { display: none; }
   /* hide the premium badge in the narrow rail; keep icons intact */
   #sidebar:not(.open) .prem-badge { display: none; }
   /* shrink the free-tier banner text so it doesn't dominate the rail */
